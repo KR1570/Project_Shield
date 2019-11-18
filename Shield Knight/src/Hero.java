@@ -11,6 +11,7 @@ public class Hero {
 	private int heroHP;
 	private int heroPosX;
 	private int heroPosY;
+	private float gravity;
 	private Image carreImage;
 	private boolean aTerre;
 	//Variable grosseur tuile
@@ -32,8 +33,9 @@ public class Hero {
 		try {
 			//intialisation de la position du her
 			tilesSize = 32;
-			heroPosY = 19;
+			heroPosY = 15;
 			heroPosX = 0;
+			gravity = 15;
 			aTerre = true;
 			carreImage = new Image("./images/Square.png");
 		} catch (SlickException e) {
@@ -44,7 +46,7 @@ public class Hero {
 	//Render
 	public void render(GameContainer gc, Graphics g) {
 		
-		carreImage.draw(heroPosX * tilesSize, heroPosY * tilesSize, 0.16f);
+		carreImage.draw(heroPosX * tilesSize, gravity * tilesSize, 0.16f);
 	}
 	
 	//Update
@@ -52,17 +54,20 @@ public class Hero {
 		int sol = Jeu.mapTest.getLayerIndex("Sol");
 		int fond = Jeu.mapTest.getLayerIndex("Fond");
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
+		heroPosY = Math.round(gravity);
 		Input input = gc.getInput();
-		//Gravité
-		
 		//SPACE pour sauter
-		if (input.isKeyDown(Input.KEY_SPACE) ) {
-			if(Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, platformes) == 0) {
-				if(aTerre == true) {
-					heroPosY -= 3;
-					aTerre = false;
-				}
+		if (input.isKeyDown(Input.KEY_SPACE) && !aTerre) {
+			gravity -= 0.3 * delta;
+			aTerre = true;
+			if(aTerre) {
+				
+				
+					gravity -=0.8;
+					
+				
 			}
+			heroPosY = Math.round(gravity);
 		}
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {

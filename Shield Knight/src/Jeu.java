@@ -15,6 +15,7 @@ public class Jeu extends BasicGame{
 	//Variables
 	static TiledMap mapTest;
 	private Hero carre;
+	private enemy enemy;
 	
 	//Constructeur du jeu
 	public Jeu(String title) 
@@ -31,6 +32,7 @@ public class Jeu extends BasicGame{
 			mapTest = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
 			carre = new Hero();
+			enemy = new enemy();
 		}
 		catch (Exception e) 
 		{
@@ -46,6 +48,7 @@ public class Jeu extends BasicGame{
 		mapTest.render(0, 0);
 		//Dessin du hero
 		carre.render(gc, g);
+		enemy.render(gc,g);
 		
 	}
 
@@ -54,6 +57,7 @@ public class Jeu extends BasicGame{
 	public void update(GameContainer gc, int delta) throws SlickException {
 		//update du hero
 		carre.update(gc, delta);
+		enemy.update(gc, delta);
 	}
 
 }
