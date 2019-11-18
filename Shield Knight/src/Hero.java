@@ -9,12 +9,18 @@ public class Hero {
 
 	//Variable du hero
 	private int heroHP;
-	private int heroPosX;
-	private int heroPosY;
+	private int heroPosX = 32;
+	private int heroPosY = 32;
 	private Image carreImage;
-	private boolean aTerre;
+	private Polygon heroPoly;
+	float heroX;
+	float heroY;
+	//Variable sauter
+	private boolean jumping = false;
+	float gravite;
+	private int sautCompteur = 0;
 	//Variable grosseur tuile
-	private int tilesSize;
+	private float scale = 32;
 	
 	public Hero() {
 		init();
@@ -27,66 +33,63 @@ public class Hero {
 		init();
 	}
 	
-	//Init 
+	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	public void init (){
 		try {
 			//intialisation de la position du her
-			tilesSize = 32;
-			heroPosY = 19;
-			heroPosX = 0;
-			aTerre = true;
+			//Hero
 			carreImage = new Image("./images/Square.png");
+			heroPoly = new Polygon(new float[]{
+	                heroX, heroY,
+	                heroX + 17 ,heroY,
+	                heroX + 17 ,heroY + 48,
+	                heroX ,heroY + 48
+	        });
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
 
-	//Render
+	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		
-		carreImage.draw(heroPosX * tilesSize, heroPosY * tilesSize, 0.16f);
+		carreImage.draw(heroPosX, heroPosY, 0.16f);
+		g.draw(heroPoly);
 	}
 	
-	//Update
+	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
 		int sol = Jeu.mapTest.getLayerIndex("Sol");
 		int fond = Jeu.mapTest.getLayerIndex("Fond");
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
-		Input input = gc.getInput();
 		//Gravité
-		
+		//if(Jeu.mapTest.getTileId(heroPosX , heroPosY + 32, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY + 32, platformes) == 0) {
+			heroPosY += 16;
+		//}
+		//Activer les inputs
+		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE) ) {
-			if(Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, platformes) == 0) {
-				if(aTerre == true) {
-					heroPosY -= 3;
-					aTerre = false;
-				}
-			}
+	//		if(Jeu.mapTest.getTileId(heroPosX , heroPosY - 32, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY - 32, platformes) == 0 && sautCompteur != 3) {
+				
+				heroPosY -= 64;
+	//		}
 		}
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
-			heroPosX -= 1;
+			heroPosX -= 32;
 		}
 		//S pour dessendre
 		if (input.isKeyDown(Input.KEY_S) ) {
-			if(Jeu.mapTest.getTileId(heroPosX , heroPosY + 1, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY + 1, platformes) == 0) {
-				heroPosY += 1;
-			}
+	//		if(Jeu.mapTest.getTileId(heroPosX , heroPosY + 32, sol) == 0 && Jeu.mapTest.getTileId(heroPosX , heroPosY + 32, platformes) == 0) {
+				heroPosY += 32;
+	//		}
 		}
 		//D pour aller a droite
 		if (input.isKeyDown(Input.KEY_D) ) {
-			heroPosX += 1;
+			heroPosX += 32;
 		}
-		if (Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, sol) != 0 || Jeu.mapTest.getTileId(heroPosX , heroPosY - 1, platformes) != 0) {
-			aTerre = true;
-		}
-		heroPosY += 0.5f;
-	}
-	
-	public void mouvement(int heroPosX, int heroPosY) {
-		
-		
 		
 	}
 }
+
