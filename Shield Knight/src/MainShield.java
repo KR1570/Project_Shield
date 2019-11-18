@@ -16,6 +16,7 @@ public class MainShield {
 		try {
 			AppGameContainer app = new AppGameContainer(new Jeu("Shield Knight"));
 			app.setDisplayMode(largeurAffichage, hauteurAffichage, siPleinEcran);
+			app.setTargetFrameRate(30);
 			app.start();
 			
 		}

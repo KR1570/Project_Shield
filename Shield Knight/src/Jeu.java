@@ -13,7 +13,8 @@ import org.newdawn.slick.*;
 public class Jeu extends BasicGame{
 
 	//Variables
-	private TiledMap mapTest;
+	static TiledMap mapTest;
+	private Hero carre;
 	
 	//Constructeur du jeu
 	public Jeu(String title) 
@@ -29,7 +30,7 @@ public class Jeu extends BasicGame{
 			//initialisation de la mapTest
 			mapTest = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
-			Hero carre = new Hero();
+			carre = new Hero();
 		}
 		catch (Exception e) 
 		{
@@ -43,12 +44,16 @@ public class Jeu extends BasicGame{
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		//Dessin de la map
 		mapTest.render(0, 0);
+		//Dessin du hero
+		carre.render(gc, g);
+		
 	}
 
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		
+		//update du hero
+		carre.update(gc, delta);
 	}
 
 }
