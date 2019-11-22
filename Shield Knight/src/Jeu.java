@@ -14,6 +14,8 @@ public class Jeu extends BasicGame{
 
 	//Variables
 	static TiledMap mapTest;
+	static TiledMap mapTest2;
+
 	private Hero carre;
 	
 	//Constructeur du jeu
@@ -28,7 +30,8 @@ public class Jeu extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		try {
 			//initialisation de la mapTest
-			mapTest = new TiledMap("./maps/mapTest.tmx");
+			// = new TiledMap("./maps/mapTest.tmx");
+			mapTest = new TiledMap("./maps/mapTest2.tmx");
 			//Initialisation du hero
 			carre = new Hero();
 		}
@@ -36,7 +39,6 @@ public class Jeu extends BasicGame{
 		{
 			System.out.println("Problème dans l'intialisation du jeu");
 		}
-		
 	}
 	
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
