@@ -100,14 +100,15 @@ import java.util.logging.Logger;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
+import src.enemy.Direction;
+
 public class Hero {
 
 	//Variable du hero
 	private int heroHP;
-	private float heroPosX = 1;
-	private float heroPosY = 1;
+	private float heroPosX = 2;
+	private float heroPosY = 2;
 	private Image carreImage;
-	private Polygon heroPoly;
 	float heroX;
 	float heroY;
 	//Variable sauter
@@ -116,7 +117,14 @@ public class Hero {
 	private float sautCompteur = 0;
 	//Variable grosseur tuile
 	private float scale = 32;
-	
+	//Hitbox
+	Rectangle heroHitBox;
+	//Ligne 
+	private Line limiteEau;
+	private Line limiteGauche;
+	private Line limiteDroite;
+	//Ennemy
+	private enemy enemy1;
 	public Hero() {
 		init();
 	}
@@ -133,13 +141,13 @@ public class Hero {
 		try {
 			//intialisation de la position du her
 			//Hero
-			carreImage = new Image("./images/Square.png");
-			heroPoly = new Polygon(new float[]{
-	                heroX, heroY,
-	                heroX + 17 ,heroY,
-	                heroX + 17 ,heroY + 48,
-	                heroX ,heroY + 48
-	        });
+			carreImage = new Image("./images/knight.png");
+			heroHitBox = new Rectangle(heroPosX*32,heroPosY*32,48,48);
+			//Limite de gauche
+			limiteGauche = new Line(20,0,20,768);
+			limiteDroite = new Line(1420,0,1420,768);
+			limiteEau = new Line(0,748,1440,748);
+			enemy1 = new enemy();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -149,19 +157,27 @@ public class Hero {
 	public void render(GameContainer gc, Graphics g) {
 		
 		carreImage.draw(heroPosX * scale, heroPosY * scale, 0.16f);
-		g.draw(heroPoly);
+		g.draw(heroHitBox);
+		g.setColor(Color.transparent);
+		g.draw(limiteEau);
+		g.draw(limiteGauche);
+		g.draw(limiteDroite);
+		g.draw(enemy1.enemy);
 	}
 	
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
 		int sol = Jeu.mapTest.getLayerIndex("Sol");
+		int fond = Jeu.mapTest.getLayerIndex("Fond");
+		enemy1.update(gc, delta);
+		//HitBox mouvement
+		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
 		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
 			heroPosY += 0.18f;
 		}
 		//Activer les inputs
 		Input input = gc.getInput();
-		
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0) {
@@ -173,15 +189,25 @@ public class Hero {
 		}
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
-			heroPosX -= 0.15f;
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteGauche)) {
+				heroPosX -= 0.15f;
+			}
 		}
 		//D pour aller a droite
 		if (input.isKeyDown(Input.KEY_D) ) {
-			heroPosX += 0.15f;
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteDroite)) {
+				heroPosX += 0.15f;
+			}
 		}
 		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0) {
 			sautCompteur =0;
 		}
+		//Limites du bas
+		if(heroHitBox.intersects(limiteEau) || heroHitBox.intersects(enemy1.enemy)) {
+			heroPosX = 5;
+			heroPosY = 15;
+		}
 		
 	}
+	
 }
