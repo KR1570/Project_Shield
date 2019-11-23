@@ -2,9 +2,12 @@ package src;
 
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.awt.Font;
+
 //import com.sun.prism.Graphics;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.gui.TextField;
 
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
@@ -16,7 +19,9 @@ public class Jeu extends BasicGame{
 	static TiledMap mapTest;
 	private Hero carre;
 	private enemy enemy;
-	
+	private Cheats cheat;
+	private TextField console;
+	private Direction direction;
 	//Constructeur du jeu
 	public Jeu(String title) 
 	{
@@ -27,12 +32,15 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	@Override
 	public void init(GameContainer gc) throws SlickException {
+		direction = Direction.RIGHT;
 		try {
 			//initialisation de la mapTest
 			mapTest = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
 			carre = new Hero();
 			enemy = new enemy();
+			cheat = new Cheats();
+			//console = new Cheats();
 		}
 		catch (Exception e) 
 		{
@@ -56,7 +64,13 @@ public class Jeu extends BasicGame{
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		//update du hero
-		carre.update(gc, delta);
+		Input input = gc.getInput();
+		if (input.isKeyDown(Input.KEY_L) ) {
+			cheat.noClip(carre.heroX, carre.heroY, gc);
+		}
+		else {
+			carre.update(gc, delta);
+		}
 		enemy.update(gc, delta);
 	}
 
