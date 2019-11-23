@@ -181,8 +181,8 @@ public class Hero {
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0) {
-				if (sautCompteur <= 12.0f) {
-					heroPosY -= 0.3f;
+				if (sautCompteur <= 8.0f) {
+					heroPosY -= 0.4f;
 					sautCompteur+= 0.3f;
 				}
 			}
