@@ -11,12 +11,12 @@ public class MainShield {
 	public static void main(String[] args) {
 		
 		int largeurAffichage = 1440;
-		int hauteurAffichage = 768;
+		int hauteurAffichage = 768; 
 		boolean siPleinEcran = false;
 		try {
 			AppGameContainer app = new AppGameContainer(new Jeu("Shield Knight"));
 			app.setDisplayMode(largeurAffichage, hauteurAffichage, siPleinEcran);
-			app.setTargetFrameRate(30);
+			app.setTargetFrameRate(120);
 			app.start();
 			
 		}
