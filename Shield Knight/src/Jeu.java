@@ -29,6 +29,7 @@ public class Jeu extends BasicGame{
 		
 	}
 	
+	//Allo
 	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	@Override
 	public void init(GameContainer gc) throws SlickException {
