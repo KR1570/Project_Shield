@@ -1,7 +1,5 @@
 package src;
 
-
-
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,11 +15,11 @@ public class enemy {
 		UP, DOWN, LEFT, RIGHT
 	}
 	private int enemyHP;
-	private float enemyPosX;
-	private float enemyPosY;
+	float enemyPosX;
+	float enemyPosY;
 	private boolean reverse;
 	private Image swat;
-	private Rectangle enemy;
+	Rectangle enemy;
 	private Line limite1;
 	private Line limite2;
 	private Direction direction;
@@ -39,13 +37,13 @@ public class enemy {
 	public void init(){
 		// TODO Auto-generated method stub
 		direction = Direction.RIGHT;
-		enemyPosX = 1;
-		enemyPosY = 9.7f;
+		enemyPosX = 8;
+		enemyPosY = 11f;
 		enemyHP = 3;
-		limite1 = new Line(14*32,14*32,14*32,12*32);
-		limite2 = new Line(0,14*32,0*32,12*32);
+		limite1 = new Line(16*32,14*32,16*32,12*32);
+		limite2 = new Line(8*32,14*32,8*32,12*32);
 		//limite1.setLocation(13*32, 12*32);
-		enemy = new Rectangle(enemyPosX*32,enemyPosY*32,40,110);
+		enemy = new Rectangle(enemyPosX*32,enemyPosY*32,32,64);
 		reverse = true;
 		
 	}
@@ -58,7 +56,7 @@ public class enemy {
 		g.draw(enemy);
 		g.draw(limite1);
 		g.draw(limite2);
-		getSwat(direction).draw(enemyPosX*32,((enemyPosY)*32),3);
+		getSwat(direction).draw(enemyPosX*32,((enemyPosY)*32),2);
 	}
 	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
@@ -70,7 +68,7 @@ public class enemy {
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
 		if(!enemy.intersects(limite1)&& reverse) {
 			direction = Direction.RIGHT;
-			enemyPosX +=0.1;
+			enemyPosX +=0.05;
 		enemy.setLocation(enemyPosX*32, enemyPosY*32);
 
  }
@@ -79,7 +77,7 @@ public class enemy {
 		}
 		if(!enemy.intersects(limite2) && reverse == false) {
 			direction = Direction.LEFT;
-			enemyPosX -=0.1;
+			enemyPosX -=0.05;
 		enemy.setLocation(enemyPosX*32, enemyPosY*32);
 		}
 		else {

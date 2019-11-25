@@ -2,12 +2,10 @@ package src;
 
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.Font;
-
 //import com.sun.prism.Graphics;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.gui.TextField;
+import org.newdawn.slick.geom.Rectangle;
 
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
@@ -17,11 +15,13 @@ public class Jeu extends BasicGame{
 
 	//Variables
 	static TiledMap mapTest;
+	static TiledMap mapTest2;
+
 	private Hero carre;
+	
 	private enemy enemy;
-	private Cheats cheat;
-	private TextField console;
-	private Direction direction;
+
+	
 	//Constructeur du jeu
 	public Jeu(String title) 
 	{
@@ -32,21 +32,21 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		direction = Direction.RIGHT;
 		try {
 			//initialisation de la mapTest
-			mapTest = new TiledMap("./maps/mapTest.tmx");
+			// = new TiledMap("./maps/mapTest.tmx"); 
+			mapTest = new TiledMap("./maps/mapTest2.tmx");
 			//Initialisation du hero
 			carre = new Hero();
+			//Initialisation de notre ennemie
 			enemy = new enemy();
-			cheat = new Cheats();
-			//console = new Cheats();
+
+			
 		}
 		catch (Exception e) 
 		{
-			System.out.println("Problème dans l'intialisation du jeu");
+			System.out.println("Ma map load pas :(");
 		}
-		
 	}
 	
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
@@ -56,21 +56,22 @@ public class Jeu extends BasicGame{
 		mapTest.render(0, 0);
 		//Dessin du hero
 		carre.render(gc, g);
+		//Dessin ennemie
 		enemy.render(gc,g);
+
 		
 	}
 
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		//update du hero
 		Input input = gc.getInput();
-		if (input.isKeyDown(Input.KEY_L) ) {
-			cheat.noClip(carre.heroX, carre.heroY, gc);
-		}
-		else {
-			carre.update(gc, delta);
-		}
+		int xpos = input.getMouseX();
+		int ypos = input.getMouseY();
+		System.out.println("X :" + xpos);
+		System.out.println("Y :" + ypos);
+		//update du hero
+		carre.update(gc, delta);
 		enemy.update(gc, delta);
 	}
 
