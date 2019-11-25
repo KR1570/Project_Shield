@@ -103,7 +103,13 @@ import org.newdawn.slick.geom.*;
 import src.enemy.Direction;
 
 public class Hero {
-
+	//Direction du hero
+	enum Direction{
+		UP, DOWN, LEFT, RIGHT
+	}
+	private Direction direction;
+	private boolean droite;
+	private boolean gauche;
 	//Variable du hero
 	private int heroHP;
 	private float heroPosX = 2;
@@ -138,27 +144,26 @@ public class Hero {
 	
 	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	public void init (){
-		try {
-			//intialisation de la position du her
-			//Hero
-			carreImage = new Image("./images/knight.png");
+			//initialisation d'un cote pour commencer
+			direction = Direction.RIGHT;
+			//intialisation de la position du hero
+			//carreImage = new Image("./images/knight.png");
 			heroHitBox = new Rectangle(heroPosX*32,heroPosY*32,48,48);
-			//Limite de gauche
+			//Limites de la map
 			limiteGauche = new Line(20,0,20,768);
 			limiteDroite = new Line(1420,0,1420,768);
 			limiteEau = new Line(0,748,1440,748);
+			//Enemie
 			enemy1 = new enemy();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
-		
-		carreImage.draw(heroPosX * scale, heroPosY * scale, 0.16f);
+		//red ou transparent
+		g.setColor(Color.red);
+		//Dessin de toutes les formes
+		getCarreImage(direction).draw(heroPosX * scale, heroPosY * scale, 0.18f);
 		g.draw(heroHitBox);
-		g.setColor(Color.transparent);
 		g.draw(limiteEau);
 		g.draw(limiteGauche);
 		g.draw(limiteDroite);
@@ -174,29 +179,45 @@ public class Hero {
 		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
 		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
-			heroPosY += 0.18f;
+			heroPosY += 0.14f;
 		}
 		//Activer les inputs
 		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0) {
-				if (sautCompteur <= 8.0f) {
-					heroPosY -= 0.4f;
-					sautCompteur+= 0.3f;
+				if (gauche == true) {
+					if (sautCompteur <= 8.0f) {
+						heroPosY -= 0.3f;
+						sautCompteur+= 0.2f;
+					}
+				}
+				if (droite == true) {
+					if (sautCompteur <= 8.0f) {
+						heroPosY -= 0.3f;
+						sautCompteur+= 0.2f;
+					}
 				}
 			}
 		}
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
+			direction = Direction.LEFT;
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteGauche)) {
 				heroPosX -= 0.15f;
+				sautCompteur+= 0.05f;
+				gauche = true;
+				droite = false;
 			}
 		}
 		//D pour aller a droite
 		if (input.isKeyDown(Input.KEY_D) ) {
+			direction = Direction.RIGHT;
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteDroite)) {
 				heroPosX += 0.15f;
+				sautCompteur+= 0.05f;
+				droite = true;
+				gauche = false;
 			}
 		}
 		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0) {
@@ -208,6 +229,27 @@ public class Hero {
 			heroPosY = 15;
 		}
 		
+	}
+	//Direction du hero avec images
+	public Image getCarreImage(Direction direction) {
+		switch (direction) {
+		case RIGHT:
+			try {
+				carreImage = new Image("./images/knightRight.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			break;
+		case LEFT:
+			
+			try {
+				carreImage = new Image("./images/knightLeft.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		break;
+		}
+		return carreImage;
 	}
 	
 }
