@@ -31,24 +31,27 @@ public class enemy {
 		this.enemyHP = enemyHP;
 		this.enemyPosX= enemyPosX;
 		this.enemyPosY = enemyPosY;
+		// TODO Auto-generated constructor stub
 	}
-	
 //-------------------------------------------------------INIT------------------------------------------------------------------
 	public void init(){
+		// TODO Auto-generated method stub
 		direction = Direction.RIGHT;
 		enemyPosX = 8;
 		enemyPosY = 11f;
 		enemyHP = 3;
 		limite1 = new Line(16*32,14*32,16*32,12*32);
 		limite2 = new Line(8*32,14*32,8*32,12*32);
+		//limite1.setLocation(13*32, 12*32);
 		enemy = new Rectangle(enemyPosX*32,enemyPosY*32,32,64);
 		reverse = true;
 		
 	}
-	
 //-------------------------------------------------------RENDER------------------------------------------------------------------
+
 	public void render(GameContainer gc, Graphics g)  {
 		
+		// TODO Auto-generated method stub
 		g.setColor(Color.transparent);
 		g.draw(enemy);
 		g.draw(limite1);
@@ -57,6 +60,9 @@ public class enemy {
 	}
 	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
+
+
+
 	public void update(GameContainer gc, int delta){
 		// TODO Auto-generated method stub
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
@@ -85,6 +91,7 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatR.png");
 			} catch (SlickException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -93,6 +100,7 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatL.png");
 			} catch (SlickException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		break;

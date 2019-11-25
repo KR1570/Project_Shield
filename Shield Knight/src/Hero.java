@@ -165,7 +165,7 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		//red ou transparent
-		g.setColor(Color.transparent);
+		g.setColor(Color.red);
 		//Dessin de toutes les formes
 		getCarreImage(direction).draw(heroPosX * scale, heroPosY * scale, 0.16f);
 		g.draw(heroHitBox);

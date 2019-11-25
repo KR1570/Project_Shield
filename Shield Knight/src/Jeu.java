@@ -18,9 +18,7 @@ public class Jeu extends BasicGame{
 	static TiledMap mapTest2;
 	private Music musique;
 	private Hero carre;
-	
 	private enemy enemy;
-
 	
 	//Constructeur du jeu
 	public Jeu(String title) 
@@ -43,7 +41,9 @@ public class Jeu extends BasicGame{
 			musique = new Music("./Audio/musicDeFond.wav");
 			musique.play();
 			musique.setVolume(0.2f);
+			enemy = new enemy();
 	}
+		
 	
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	@Override
@@ -54,8 +54,8 @@ public class Jeu extends BasicGame{
 		carre.render(gc, g);
 		//Dessin ennemie
 		enemy.render(gc,g);
+		enemy.render(gc,g);
 
-		
 	}
 
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
