@@ -121,6 +121,8 @@ public class Hero {
 	private boolean jumping = false;
 	float gravite;
 	private float sautCompteur = 0;
+	private Vector2f velocite;
+	private Point position;
 	//Variable grosseur tuile
 	private float scale = 32;
 	//Hitbox
@@ -155,14 +157,17 @@ public class Hero {
 			limiteEau = new Line(0,748,1440,748);
 			//Enemie
 			enemy1 = new enemy();
+			//Vecteur de saut
+			velocite = new Vector2f(heroPosX+1,heroPosY+4);
+			position = new Point(heroPosX,heroPosY);
 	}
 
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		//red ou transparent
-		g.setColor(Color.red);
+		g.setColor(Color.transparent);
 		//Dessin de toutes les formes
-		getCarreImage(direction).draw(heroPosX * scale, heroPosY * scale, 0.18f);
+		getCarreImage(direction).draw(heroPosX * scale, heroPosY * scale, 0.16f);
 		g.draw(heroHitBox);
 		g.draw(limiteEau);
 		g.draw(limiteGauche);
@@ -179,24 +184,16 @@ public class Hero {
 		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
 		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
-			heroPosY += 0.14f;
+			heroPosY += 0.12f;
 		}
 		//Activer les inputs
 		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0) {
-				if (gauche == true) {
-					if (sautCompteur <= 8.0f) {
-						heroPosY -= 0.3f;
-						sautCompteur+= 0.2f;
-					}
-				}
-				if (droite == true) {
-					if (sautCompteur <= 8.0f) {
-						heroPosY -= 0.3f;
-						sautCompteur+= 0.2f;
-					}
+				if (sautCompteur <= 8.0f) {
+					heroPosY -= 0.3f;
+					sautCompteur+= 0.2f;
 				}
 			}
 		}

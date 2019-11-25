@@ -16,7 +16,7 @@ public class Jeu extends BasicGame{
 	//Variables
 	static TiledMap mapTest;
 	static TiledMap mapTest2;
-
+	private Music musique;
 	private Hero carre;
 	
 	private enemy enemy;
@@ -32,21 +32,16 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE D'INTIALISATION------------------------------------------------------------------
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		try {
 			//initialisation de la mapTest
-			// = new TiledMap("./maps/mapTest.tmx"); 
-			mapTest = new TiledMap("./maps/mapTest2.tmx");
+			mapTest = new TiledMap("./Maps/mapTest2.tmx");
 			//Initialisation du hero
 			carre = new Hero();
 			//Initialisation de notre ennemie
 			enemy = new enemy();
-
-			
-		}
-		catch (Exception e) 
-		{
-			System.out.println("Problème dans l'intialisation du jeu");
-		}
+			//musique
+			musique = new Music("./Audio/musicDeFond.wav");
+			musique.play();
+			musique.setVolume(0.2f);
 	}
 	
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
