@@ -6,6 +6,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
@@ -16,6 +17,7 @@ public class Jeu extends BasicGame{
 	//Variables
 	static TiledMap mapTest;
 	static TiledMap mapTest2;
+	private Projectile projectile;
 
 	private Hero carre;
 	
@@ -36,10 +38,13 @@ public class Jeu extends BasicGame{
 			//initialisation de la mapTest
 			// = new TiledMap("./maps/mapTest.tmx"); 
 			mapTest = new TiledMap("./maps/mapTest2.tmx");
+			mapTest2 = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
 			carre = new Hero();
 			//Initialisation de notre ennemie
 			enemy = new enemy();
+			//initialise les projectiles
+			projectile = new Projectile(new Vector2f(100,200), new Vector2f(500,100));
 
 			
 		}
@@ -52,8 +57,11 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-		//Dessin de la map
-		mapTest.render(0, 0);
+
+			//Dessin de la map
+			mapTest.render(0, 0);
+		projectile.render(gc, g);
+		
 		//Dessin du hero
 		carre.render(gc, g);
 		//Dessin ennemie
@@ -73,6 +81,7 @@ public class Jeu extends BasicGame{
 		//update du hero
 		carre.update(gc, delta);
 		enemy.update(gc, delta);
+		projectile.update(delta);
 	}
 
 }

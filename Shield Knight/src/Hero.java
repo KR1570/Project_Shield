@@ -107,7 +107,7 @@ public class Hero {
 
 	//Variable du hero
 	private int heroHP;
-	private float heroPosX = 2;
+	static float heroPosX = 2;
 	private float heroPosY = 2;
 	private Image carreImage;
 	float heroX;
@@ -214,6 +214,14 @@ public class Hero {
 			heroPosX = 5;
 			heroPosY = 15;
 		}
+		
+	}
+	public boolean newMap() {
+		boolean nextMap = false;
+		if(heroPosX == 40) {
+			nextMap = true;
+		}
+		return nextMap;
 		
 	}
 	
