@@ -17,8 +17,13 @@ public class Jeu extends BasicGame{
 	//Variables
 	static TiledMap mapTest;
 	static TiledMap mapTest2;
-	private Projectile projectile;
-
+	//projectile
+	private Projectile[] projectiles;
+	private Projectile p;
+	private int fireRate = 400;
+	private int current = 0;
+	private int time = 0;
+	//--------------------------------------
 	private Hero carre;
 	
 	private enemy enemy;
@@ -43,8 +48,13 @@ public class Jeu extends BasicGame{
 			carre = new Hero();
 			//Initialisation de notre ennemie
 			enemy = new enemy();
-			//initialise les projectiles
-			projectile = new Projectile(new Vector2f(100,200), new Vector2f(500,100));
+			p = new Projectile();
+			p.init();
+			projectiles = new Projectile[8];
+			for(int i = 0; i < projectiles.length; i++) {
+				
+				projectiles[i] = new Projectile();
+			}
 
 			
 		}
@@ -60,12 +70,14 @@ public class Jeu extends BasicGame{
 
 			//Dessin de la map
 			mapTest.render(0, 0);
-		projectile.render(gc, g);
 		
 		//Dessin du hero
 		carre.render(gc, g);
 		//Dessin ennemie
 		enemy.render(gc,g);
+		for(Projectile p : projectiles) {
+			p.render(gc, g);
+		}
 
 		
 	}
@@ -81,7 +93,20 @@ public class Jeu extends BasicGame{
 		//update du hero
 		carre.update(gc, delta);
 		enemy.update(gc, delta);
-		projectile.update(delta);
+		
+		time += delta;
+		if(time > fireRate && input.isKeyPressed(Input.KEY_UP))
+		{
+			projectiles[current] = new Projectile(new Vector2f(0,0), new Vector2f(carre.heroPosX*32,carre.heroPosY*32));
+			current++;
+			if(current >= projectiles.length) {
+				current = 0;
+				time=0;
+			}
+		}
+		for(Projectile p : projectiles) {
+			p.update(delta);
+		}
 	}
 
 }

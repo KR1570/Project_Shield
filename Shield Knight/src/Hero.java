@@ -107,8 +107,8 @@ public class Hero {
 
 	//Variable du hero
 	private int heroHP;
-	static float heroPosX = 2;
-	private float heroPosY = 2;
+	float heroPosX = 2;
+	float heroPosY = 2;
 	private Image carreImage;
 	float heroX;
 	float heroY;
@@ -119,13 +119,15 @@ public class Hero {
 	//Variable grosseur tuile
 	private float scale = 32;
 	//Hitbox
-	Rectangle heroHitBox;
+	static Rectangle heroHitBox;
 	//Ligne 
 	private Line limiteEau;
 	private Line limiteGauche;
 	private Line limiteDroite;
 	//Ennemy
 	private enemy enemy1;
+	//projectile
+	
 	public Hero() {
 		init();
 	}
@@ -149,7 +151,6 @@ public class Hero {
 			limiteDroite = new Line(1420,0,1420,768);
 			limiteEau = new Line(0,748,1440,748);
 			enemy1 = new enemy();
-
 			
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -160,12 +161,14 @@ public class Hero {
 	public void render(GameContainer gc, Graphics g) {
 		
 		carreImage.draw(heroPosX * scale, heroPosY * scale, 0.16f);
+		g.setColor(Color.red);
 		g.draw(heroHitBox);
-		g.setColor(Color.transparent);
+
 		g.draw(limiteEau);
 		g.draw(limiteGauche);
 		g.draw(limiteDroite);
 		g.draw(enemy1.enemy);
+
 		
 		
 	}
@@ -210,7 +213,7 @@ public class Hero {
 			sautCompteur =0;
 		}
 		//Limites du bas
-		if(heroHitBox.intersects(limiteEau) || heroHitBox.intersects(enemy1.enemy)) {
+		if(heroHitBox.intersects(limiteEau) || heroHitBox.intersects(enemy1.enemy)|| Projectile.isHit()==true) {
 			heroPosX = 5;
 			heroPosY = 15;
 		}
