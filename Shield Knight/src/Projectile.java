@@ -20,16 +20,15 @@ public class Projectile{
 		this.position = position;
 		this.speed = speed;
 		// TODO Auto-generated constructor stub
-		init();
 	}
 	public Projectile() {
 		active = false;
 	}
 	
-	public void init() {
+	public void init(int posX,int posY) {
 		// TODO Auto-generated method stub
 		bullet = new Circle(20,20, 12);
-		position = new Vector2f(0,0);
+		position = new Vector2f(posX,posY);
 		
 	}
 	public void render(GameContainer gc, Graphics g){
@@ -44,12 +43,12 @@ public class Projectile{
 
 
 
-	public void update(int delta) {
+	public void update(int delta,float vitesse) {
 		// TODO Auto-generated method stub
 
 		if(active) {
 			Vector2f realSpeed = speed.copy();
-			realSpeed.scale((delta/1000.0f));
+			realSpeed.scale((delta/vitesse));
 			position.add(realSpeed);
 			bullet.setLocation(position.getX()-15, position.getY()-10);
 			life += delta;
@@ -66,6 +65,7 @@ public class Projectile{
 		boolean hit = false;
 		if(Hero.heroHitBox.intersects(bullet)) {
 			hit = true;
+			
 		}
 		return hit;
 	}

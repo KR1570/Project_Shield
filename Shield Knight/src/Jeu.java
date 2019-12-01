@@ -5,6 +5,7 @@ import org.newdawn.slick.tiled.TiledMap;
 //import com.sun.prism.Graphics;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -18,14 +19,14 @@ public class Jeu extends BasicGame{
 	static TiledMap mapTest;
 	static TiledMap mapTest2;
 	//projectile
-	private Projectile[] projectiles;
+
 	private Projectile p;
-	private int fireRate = 400;
-	private int current = 0;
-	private int time = 0;
+
+	int ypos;
+	int xpos;
 	//--------------------------------------
 	private Hero carre;
-	
+	private Sniper sniper;
 	private enemy enemy;
 
 	
@@ -40,6 +41,8 @@ public class Jeu extends BasicGame{
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		try {
+
+			sniper = new Sniper();
 			//initialisation de la mapTest
 			// = new TiledMap("./maps/mapTest.tmx"); 
 			mapTest = new TiledMap("./maps/mapTest2.tmx");
@@ -49,12 +52,7 @@ public class Jeu extends BasicGame{
 			//Initialisation de notre ennemie
 			enemy = new enemy();
 			p = new Projectile();
-			p.init();
-			projectiles = new Projectile[8];
-			for(int i = 0; i < projectiles.length; i++) {
-				
-				projectiles[i] = new Projectile();
-			}
+			sniper.init();
 
 			
 		}
@@ -70,14 +68,12 @@ public class Jeu extends BasicGame{
 
 			//Dessin de la map
 			mapTest.render(0, 0);
-		
+			g.setColor(Color.red);
+			sniper.render(gc, g);
 		//Dessin du hero
 		carre.render(gc, g);
 		//Dessin ennemie
 		enemy.render(gc,g);
-		for(Projectile p : projectiles) {
-			p.render(gc, g);
-		}
 
 		
 	}
@@ -85,7 +81,9 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
+		
 		Input input = gc.getInput();
+		sniper.update(gc, delta,carre.heroPosX,carre.heroPosY);
 		int xpos = input.getMouseX();
 		int ypos = input.getMouseY();
 		System.out.println("X :" + xpos);
@@ -94,19 +92,7 @@ public class Jeu extends BasicGame{
 		carre.update(gc, delta);
 		enemy.update(gc, delta);
 		
-		time += delta;
-		if(time > fireRate && input.isKeyPressed(Input.KEY_UP))
-		{
-			projectiles[current] = new Projectile(new Vector2f(0,0), new Vector2f(carre.heroPosX*32,carre.heroPosY*32));
-			current++;
-			if(current >= projectiles.length) {
-				current = 0;
-				time=0;
-			}
-		}
-		for(Projectile p : projectiles) {
-			p.update(delta);
-		}
+		
 	}
 
 }
