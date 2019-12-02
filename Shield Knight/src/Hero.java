@@ -37,6 +37,7 @@ public class Hero {
 	private Line limiteEau;
 	private Line limiteGauche;
 	private Line limiteDroite;
+	private Line limiteHaut;
 	//Ennemy
 	private enemy enemy1;
 	public Hero() {
@@ -58,6 +59,7 @@ public class Hero {
 			//carreImage = new Image("./images/knight.png");
 			heroHitBox = new Rectangle(heroPosX*32,heroPosY*32,48,48);
 			//Limites de la map
+			limiteHaut = new Line(0,24,1440,24);
 			limiteGauche = new Line(20,0,20,768);
 			limiteDroite = new Line(1420,0,1420,768);
 			limiteEau = new Line(0,748,1440,748);
@@ -79,6 +81,7 @@ public class Hero {
 		g.draw(limiteGauche);
 		g.draw(limiteDroite);
 		g.draw(enemy1.enemy);
+		g.draw(limiteHaut);
 	}
 	
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
@@ -89,14 +92,16 @@ public class Hero {
 		//HitBox mouvement
 		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
-		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0 && !heroHitBox.intersects(Bouclier.bouclierHitBox)) {
+		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
+		}
+		else {
 			heroPosY += 0.13f;
 		}
 		//Activer les inputs
 		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 ) {
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !heroHitBox.intersects(limiteHaut)) {
 				if (sautCompteur <= 8.0f) {
 					heroPosY -= 0.3f;
 					sautCompteur+= 0.2f;
@@ -124,7 +129,7 @@ public class Hero {
 			}
 		}
 		//Reset le saut
-		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || heroHitBox.intersects(Bouclier.bouclierHitBox)) {
+		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
 		}
 		//Limites du bas
@@ -135,10 +140,14 @@ public class Hero {
 		if(heroHitBox.intersects(enemy1.enemy) && enemy.reverse == false) {
 			heroPosX = enemy.enemyPosX - 1.0f;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && enemy.reverse == true) {
+		if(heroHitBox.intersects(enemy1.enemy) && enemy.reverse) {
 			heroPosX = enemy.enemyPosX + 1.0f;
 		}
-	}
+		/*
+		if(heroHitBox.intersects(Bouclier.bouclierHitBox) && !Bouclier.bouclierUp && Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
+			sautCompteur=9;
+		}*/
+}
 	//Direction du hero avec images
 	public Image getCarreImage(Direction direction) {
 		switch (direction) {

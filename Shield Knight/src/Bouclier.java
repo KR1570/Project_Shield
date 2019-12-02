@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import src.enemy.Direction;
 
@@ -21,7 +22,9 @@ public class Bouclier {
 		init();
 	}
 	//Bouclier
+	static boolean bouclierUp;
 	static Rectangle bouclierHitBox;
+	static Image bouclierImage;
 	Direction direction;
 
 //-------------------------------------------------------INIT------------------------------------------------------------------
@@ -29,10 +32,11 @@ public class Bouclier {
 		direction = Direction.RIGHT;
 	}
 //-------------------------------------------------------RENDER------------------------------------------------------------------
-
 	public void render(GameContainer gc, Graphics g)  {
 		g.setColor(Color.black);
-		g.fill(getBouclierHitBox(direction));
+		g.draw(getBouclierHitBox(direction));
+		//g.draw(getBouclierImage(direction));
+		//getBouclierImage(direction).draw(Hero.heroPosX*32+56,Hero.heroPosY*32,24,48);
 	}
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta){
@@ -40,14 +44,20 @@ public class Bouclier {
 		Input input = gc.getInput();
 		//Fleche de droite
 		if (input.isKeyDown(Input.KEY_LEFT )) {
+			bouclierUp = false;
+			System.out.println(bouclierUp);
 			direction = Direction.LEFT;
 		}
 		//Fleche de gauche
 		else if (input.isKeyDown(Input.KEY_RIGHT )) {
+			bouclierUp = false;
+			System.out.println(bouclierUp);
 			direction = Direction.RIGHT;
 		}
 		//Fleche du haut
 		else if (input.isKeyDown(Input.KEY_UP )) {
+			bouclierUp = true;
+			System.out.println(bouclierUp);
 			direction = Direction.UP;
 		}
 		else
@@ -71,5 +81,22 @@ public class Bouclier {
 				break;
 		}
 		return bouclierHitBox;
+	}
+	
+	public Image getBouclierImage(Direction direction) throws SlickException{
+		switch (direction) {
+			case RIGHT:
+				bouclierImage = new Image("./images/bouclierRight.png");
+				break;
+			case LEFT:
+				bouclierImage = new Image("./images/bouclierLeft.png");
+				break;
+			case UP:
+				bouclierImage = new Image("./images/bouclierUp.png");
+				break;
+			case DOWN:
+				break;
+		}
+		return bouclierImage;
 	}
 }

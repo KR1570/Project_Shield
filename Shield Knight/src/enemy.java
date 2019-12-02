@@ -66,7 +66,7 @@ public class enemy {
 	public void update(GameContainer gc, int delta){
 		// TODO Auto-generated method stub
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
-		if(!enemy.intersects(limite1)&& reverse && !enemy.intersects(Bouclier.bouclierHitBox) && reverse) {
+		if(!enemy.intersects(limite1) && reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.RIGHT;
 			enemyPosX +=0.03;
 			enemy.setLocation(enemyPosX*32, enemyPosY*32);
@@ -74,7 +74,7 @@ public class enemy {
 		else {
 			reverse = false;
 		}
-		if(!enemy.intersects(limite2) && reverse == false && !enemy.intersects(Bouclier.bouclierHitBox) && reverse == false) {
+		if(!enemy.intersects(limite2) && reverse == false && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.LEFT;
 			enemyPosX -=0.03;
 			enemy.setLocation(enemyPosX*32, enemyPosY*32);
@@ -91,7 +91,6 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatR.png");
 			} catch (SlickException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -100,7 +99,7 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatL.png");
 			} catch (SlickException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		break;
