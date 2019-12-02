@@ -22,14 +22,16 @@ public class Jeu extends BasicGame{
 
 	private Projectile p;
 
-	int ypos;
-	int xpos;
+
 	//--------------------------------------
 	private Hero carre;
 	private Sniper sniper;
 	private enemy enemy;
+	private Bouclier bouclier;
+	private Music musique;
+	private int mapTestX;
+	private int mapTestY;
 
-	
 	//Constructeur du jeu
 	public Jeu(String title) 
 	{
@@ -49,10 +51,15 @@ public class Jeu extends BasicGame{
 			mapTest2 = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
 			carre = new Hero();
+			bouclier = new Bouclier();
 			//Initialisation de notre ennemie
 			enemy = new enemy();
 			p = new Projectile();
 			sniper.init();
+			//musique
+			musique = new Music("./Audio/musicDeFond.wav");
+			musique.play();
+			musique.setVolume(0.15f);
 
 			
 		}
@@ -66,14 +73,15 @@ public class Jeu extends BasicGame{
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
-			//Dessin de la map
-			mapTest.render(0, 0);
-			g.setColor(Color.red);
-			sniper.render(gc, g);
+		//Dessin de la map
+		mapTest.render(0, 0);
+		g.setColor(Color.red);
+		sniper.render(gc, g);
 		//Dessin du hero
 		carre.render(gc, g);
 		//Dessin ennemie
 		enemy.render(gc,g);
+		bouclier.render(gc, g);
 
 		
 	}
@@ -91,7 +99,7 @@ public class Jeu extends BasicGame{
 		//update du hero
 		carre.update(gc, delta);
 		enemy.update(gc, delta);
-		
+		bouclier.update(gc, delta);
 		
 	}
 

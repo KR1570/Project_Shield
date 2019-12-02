@@ -3,6 +3,7 @@ package src;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -14,7 +15,9 @@ public class Sniper extends enemy{
 	private int current = 0;
 	private int time = 0;
 	private Hero hero;
-	
+	private Line laser;
+	float x=0;
+	float y=0;
 	
 	public Sniper(int sniperHp,int sniperPosX,int sniperPosY) {
 		super(sniperHp,sniperPosX,sniperPosY);
@@ -35,11 +38,15 @@ public class Sniper extends enemy{
 			
 			projectiles[i] = new Projectile();
 		}
+		float x=0;
+		float y=0;
+		laser = new Line(x,y,1200,260);
 	}
 //-------------------------------------------------------RENDER------------------------------------------------------------------
 	
 	public  void render(GameContainer gc, Graphics g) {
 		g.draw(sniper);
+		g.draw(laser);
 		for(Projectile p : projectiles) {
 			p.render(gc, g);
 		}
@@ -47,11 +54,14 @@ public class Sniper extends enemy{
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 
 	public void update(GameContainer gc, int delta,float heroX,float heroY) {
+		x=heroX;
+		y=heroY;
 		time += delta;
 		Input input = gc.getInput();
-		if(time > fireRate || input.isKeyPressed(Input.KEY_UP))
+		laser.set(heroX*32+32,heroY*32+32,1200,260);
+		if(time > fireRate)
 		{
-			projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f(-heroY*32,heroX*32));
+			projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f(-heroX,heroY*32));
 			current++;
 			if(current >= projectiles.length) {
 				current = 0;

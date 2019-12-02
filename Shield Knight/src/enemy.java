@@ -15,9 +15,9 @@ public class enemy {
 		UP, DOWN, LEFT, RIGHT
 	}
 	private int enemyHP;
-	float enemyPosX;
-	float enemyPosY;
-	private boolean reverse;
+	static float enemyPosX;
+	static float enemyPosY;
+	static boolean reverse;
 	private Image swat;
 	Rectangle enemy;
 	private Line limite1;
