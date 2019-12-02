@@ -1,6 +1,5 @@
 package src;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -10,7 +9,7 @@ public class MainShield {
 
 	public static void main(String[] args) {
 		
-		int largeurAffichage = 1440;
+		int largeurAffichage = 1440; 
 		int hauteurAffichage = 768; 
 		boolean siPleinEcran = false;
 		try {

@@ -15,9 +15,9 @@ public class enemy {
 		UP, DOWN, LEFT, RIGHT
 	}
 	private int enemyHP;
-	float enemyPosX;
+	static float enemyPosX;
 	float enemyPosY;
-	private boolean reverse;
+	static boolean reverse;
 	private Image swat;
 	Rectangle enemy;
 	private Line limite1;
@@ -40,8 +40,8 @@ public class enemy {
 		enemyPosX = 8;
 		enemyPosY = 11f;
 		enemyHP = 3;
-		limite1 = new Line(16*32,14*32,16*32,12*32);
-		limite2 = new Line(8*32,14*32,8*32,12*32);
+		limite1 = new Line(16*31,14*32,16*31,12*32);
+		limite2 = new Line(8*33,14*32,8*33,12*32);
 		//limite1.setLocation(13*32, 12*32);
 		enemy = new Rectangle(enemyPosX*32,enemyPosY*32,32,64);
 		reverse = true;
@@ -66,24 +66,24 @@ public class enemy {
 	public void update(GameContainer gc, int delta){
 		// TODO Auto-generated method stub
 		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
-		if(!enemy.intersects(limite1)&& reverse) {
+		if(!enemy.intersects(limite1) && reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.RIGHT;
-			enemyPosX +=0.05;
-		enemy.setLocation(enemyPosX*32, enemyPosY*32);
-
- }
+			enemyPosX +=0.03;
+			enemy.setLocation(enemyPosX*32, enemyPosY*32);
+		}
 		else {
 			reverse = false;
 		}
-		if(!enemy.intersects(limite2) && reverse == false) {
+		if(!enemy.intersects(limite2) && reverse == false && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.LEFT;
-			enemyPosX -=0.05;
-		enemy.setLocation(enemyPosX*32, enemyPosY*32);
+			enemyPosX -=0.03;
+			enemy.setLocation(enemyPosX*32, enemyPosY*32);
 		}
 		else {
 			reverse = true;
 		}
-		
+		System.out.println("X" + enemyPosX);
+		System.out.println("Y" + enemyPosY);
 	}
 	public Image getSwat(Direction direction) {
 		switch (direction) {
@@ -91,7 +91,6 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatR.png");
 			} catch (SlickException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -100,7 +99,7 @@ public class enemy {
 			try {
 				swat = new Image("./images/swatL.png");
 			} catch (SlickException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		break;
