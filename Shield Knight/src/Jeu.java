@@ -34,7 +34,7 @@ public class Jeu extends BasicGame{
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 			//initialisation de la mapTestTest
-			mapTest = new TiledMap("./Maps/level1-2.tmx");
+			mapTest = new TiledMap("./Maps/level1-1.tmx");
 			//Initialisation du hero et son bouclier
 			carre = new Hero();
 			bouclier = new Bouclier();
