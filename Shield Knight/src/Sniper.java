@@ -51,7 +51,7 @@ public class Sniper extends enemy{
 		Input input = gc.getInput();
 		if(time > fireRate || input.isKeyPressed(Input.KEY_UP))
 		{
-			projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f((-heroX)*32,heroY*32));
+			projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f(-heroY*32,heroX*32));
 			current++;
 			if(current >= projectiles.length) {
 				current = 0;
