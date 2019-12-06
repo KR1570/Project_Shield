@@ -26,7 +26,7 @@ public class Jeu extends BasicGame{
 	//--------------------------------------
 	private Hero carre;
 	private Sniper sniper;
-	private enemy enemy;
+	private Enemy enemy;
 	private Bouclier bouclier;
 	private Music musique;
 	private int mapTestX;
@@ -53,7 +53,7 @@ public class Jeu extends BasicGame{
 			carre = new Hero();
 			bouclier = new Bouclier();
 			//Initialisation de notre ennemie
-			enemy = new enemy();
+			enemy = new Enemy();
 			p = new Projectile();
 			sniper.init();
 			//musique

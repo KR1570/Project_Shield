@@ -30,6 +30,7 @@ public class Projectile{
 		bullet = new Circle(20,20, 12);
 		position = new Vector2f(posX,posY);
 		
+		
 	}
 	public void render(GameContainer gc, Graphics g){
 		if(active) {

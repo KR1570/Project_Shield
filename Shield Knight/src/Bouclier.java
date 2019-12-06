@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-import src.enemy.Direction;
+import src.Enemy.Direction;
 
 public class Bouclier {
 	

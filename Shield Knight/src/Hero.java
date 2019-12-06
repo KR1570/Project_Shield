@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
-import src.enemy.Direction;
+import src.Enemy.Direction;
 
 public class Hero {
 	//Direction du hero
@@ -39,7 +39,7 @@ public class Hero {
 	private Line limiteDroite;
 	private Line limiteHaut;
 	//Ennemy
-	private enemy enemy1;
+	private Enemy enemy1;
 	public Hero() {
 		init();
 	}
@@ -64,7 +64,7 @@ public class Hero {
 			limiteDroite = new Line(1420,0,1420,768);
 			limiteEau = new Line(0,748,1440,748);
 			//Enemie
-			enemy1 = new enemy();
+			enemy1 = new Enemy();
 			//Vecteur de saut
 			velocite = new Vector2f(heroPosX+1,heroPosY+4);
 			position = new Point(heroPosX,heroPosY);
@@ -137,11 +137,11 @@ public class Hero {
 			heroPosX = 5;
 			heroPosY = 15;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && enemy.reverse == false) {
-			heroPosX = enemy.enemyPosX - 1.0f;
+		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse == false) {
+			heroPosX = Enemy.enemyPosX - 1.0f;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && enemy.reverse) {
-			heroPosX = enemy.enemyPosX + 1.0f;
+		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse) {
+			heroPosX = Enemy.enemyPosX + 1.0f;
 		}
 		/*
 		if(heroHitBox.intersects(Bouclier.bouclierHitBox) && !Bouclier.bouclierUp && Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
