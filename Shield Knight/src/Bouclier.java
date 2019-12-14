@@ -17,7 +17,8 @@ public class Bouclier {
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
 	}
-	
+	private float bouclierPosX;
+	private float bouclierPosY;
 	public Bouclier() {
 		init();
 	}
@@ -25,6 +26,19 @@ public class Bouclier {
 	static boolean bouclierUp;
 	static Rectangle bouclierHitBox;
 	static Image bouclierImage;
+	
+	public float getBouclierPosX() {
+		return bouclierPosX;
+	}
+	public void setBouclierPosX(float bouclierPosX) {
+		this.bouclierPosX = bouclierPosX;
+	}
+	public float getBouclierPosY() {
+		return bouclierPosY;
+	}
+	public void setBouclierPosY(float bouclierPosY) {
+		this.bouclierPosY = bouclierPosY;
+	}
 	Direction direction;
 
 //-------------------------------------------------------INIT------------------------------------------------------------------
@@ -67,15 +81,18 @@ public class Bouclier {
 	}
 	//Fonction qui créé l'objet de bouclier et lui donne ses dimensions
 	public Rectangle getBouclierHitBox(Direction direction){
+		bouclierPosX= Hero.getHeroPosX();
+		bouclierPosY= Hero.getHeroPosY();
 		switch (direction) {
+
 			case RIGHT:
-				bouclierHitBox = new Rectangle(Hero.heroPosX*32+56,Hero.heroPosY*32,24,48);
+				bouclierHitBox = new Rectangle(bouclierPosX*32+56,bouclierPosY*32,24,48);
 				break;
 			case LEFT:
-				bouclierHitBox = new Rectangle(Hero.heroPosX*32-25,Hero.heroPosY*32,24,48);
+				bouclierHitBox = new Rectangle(bouclierPosX*32-25,bouclierPosY*32,24,48);
 				break;
 			case UP:
-				bouclierHitBox = new Rectangle(Hero.heroPosX*32,Hero.heroPosY*32-32,48,24);
+				bouclierHitBox = new Rectangle(bouclierPosX*32+8,bouclierPosY*32-32,48,24);
 				break;
 			case DOWN :
 				break;

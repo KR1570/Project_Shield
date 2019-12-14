@@ -2,6 +2,9 @@ package src;
 
 import org.newdawn.slick.tiled.TiledMap;
 
+import projectile.Pistol;
+import projectile.Sniper;
+
 //import com.sun.prism.Graphics;
 
 import org.newdawn.slick.*;
@@ -20,8 +23,8 @@ public class Jeu extends BasicGame{
 	static TiledMap mapTest2;
 	//projectile
 
-	private Projectile p;
-
+	//private Projectile p;
+	private Pistol pistol;
 
 	//--------------------------------------
 	private Hero carre;
@@ -43,7 +46,8 @@ public class Jeu extends BasicGame{
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		try {
-
+			
+			pistol= new Pistol();
 			sniper = new Sniper();
 			//initialisation de la mapTest
 			// = new TiledMap("./maps/mapTest.tmx"); 
@@ -54,8 +58,9 @@ public class Jeu extends BasicGame{
 			bouclier = new Bouclier();
 			//Initialisation de notre ennemie
 			enemy = new Enemy();
-			p = new Projectile();
+			//p = new Projectile();
 			sniper.init();
+			pistol.init();
 			//musique
 			musique = new Music("./Audio/musicDeFond.wav");
 			musique.play();
@@ -72,10 +77,10 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-
 		//Dessin de la map
 		mapTest.render(0, 0);
 		g.setColor(Color.red);
+		pistol.render(gc, g);
 		sniper.render(gc, g);
 		//Dessin du hero
 		carre.render(gc, g);
@@ -89,7 +94,7 @@ public class Jeu extends BasicGame{
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		
+		pistol.update(gc, delta);
 		Input input = gc.getInput();
 		sniper.update(gc, delta,carre.heroPosX,carre.heroPosY);
 		int xpos = input.getMouseX();

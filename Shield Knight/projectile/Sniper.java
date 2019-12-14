@@ -1,4 +1,4 @@
-package src;
+package projectile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,10 +8,13 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import src.Enemy;
+import src.Hero;
+
 public class Sniper extends Enemy{
 	Rectangle sniper;
-	private Projectile[] projectiles;
-	private Projectile p;
+	private SniperBullet[] SniperBullets;
+	private SniperBullet p;
 	private int fireRate = 1000;
 	private int current = 0;
 	private int time = 0;
@@ -34,14 +37,14 @@ public class Sniper extends Enemy{
 	public void init() {
 		counter = false;
 		hero = new Hero();
-		p = new Projectile();
+		p = new SniperBullet();
 		p.init(1200, 260);
 		sniper = new Rectangle(1200,260,50,25);
-		projectiles = new Projectile[8];
+		SniperBullets = new SniperBullet[8];
 		
-		for(int i = 0; i < projectiles.length; i++) {
+		for(int i = 0; i < SniperBullets.length; i++) {
 			
-			projectiles[i] = new Projectile();
+			SniperBullets[i] = new SniperBullet();
 		}
 
 		laser = new Line(0,0,1200,260);
@@ -54,7 +57,7 @@ public class Sniper extends Enemy{
 		if(range.intersects(hero.heroHitBox)) {
 		g.draw(laser);
 		g.draw(range);
-		for(Projectile p : projectiles) {
+		for(SniperBullet p : SniperBullets) {
 			p.render(gc, g);
 		}
 		}
@@ -72,9 +75,9 @@ public class Sniper extends Enemy{
 			X=1200-(heroX*32);
 			Y=260-(heroY*32);
 		}
-		//si le hero n'est plus dans le range le projectile retourne a son point de depart
+		//si le hero n'est plus dans le range le SniperBullet retourne a son point de depart
 		if(!range.intersects(hero.heroHitBox)) {
-		projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f(1200,260));
+		SniperBullets[current] = new SniperBullet(new Vector2f(1200,260), new Vector2f(1200,260));
 		}
 		else {
 		time += delta;
@@ -83,9 +86,9 @@ public class Sniper extends Enemy{
 		
 		if(time > fireRate)
 		{
-			projectiles[current] = new Projectile(new Vector2f(1200,260), new Vector2f(X,Y));
+			SniperBullets[current] = new SniperBullet(new Vector2f(1200,260), new Vector2f(X,Y));
 			current++;
-			if(current >= projectiles.length) {
+			if(current >= SniperBullets.length) {
 				current = 0;
 				time=0;
 			}
@@ -96,7 +99,7 @@ public class Sniper extends Enemy{
 		
 
 		
-		for(Projectile p : projectiles) {
+		for(SniperBullet p : SniperBullets) {
 			p.update(delta,5000f);
 		}
 	

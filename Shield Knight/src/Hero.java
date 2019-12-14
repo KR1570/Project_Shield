@@ -17,11 +17,25 @@ public class Hero {
 	private boolean gauche;
 	//Variable du hero
 	private int heroHP;
-	static float heroPosX = 22;
-	static float heroPosY = 10;
+	static float heroPosX ;
+	static float heroPosY ;
+	public static float getHeroPosX() {
+		return heroPosX;
+	}
+
+	public void setHeroPosX(float heroPosX) {
+		this.heroPosX = heroPosX;
+	}
+
+	public static float getHeroPosY() {
+		return heroPosY;
+	}
+
+	public void setHeroPosY(float heroPosY) {
+		this.heroPosY = heroPosY;
+	}
 	private Image carreImage;
-	float heroX;
-	float heroY;
+
 	//Variable sauter
 	private boolean jumping = false;
 	float gravite;
@@ -31,7 +45,7 @@ public class Hero {
 	//Variable grosseur tuile
 	private float scale = 32;
 	//Hitbox
-	 static Rectangle heroHitBox;
+	 public static Rectangle heroHitBox;
 
 	//Ligne 
 	private Line limiteEau;
@@ -57,7 +71,7 @@ public class Hero {
 			direction = Direction.RIGHT;
 			//intialisation de la position du hero
 			//carreImage = new Image("./images/knight.png");
-			heroHitBox = new Rectangle(heroPosX*32,heroPosY*32,48,48);
+			setHeroHitBox(new Rectangle(heroPosX*32,heroPosY*32,48,48));
 			//Limites de la map
 			limiteHaut = new Line(0,24,1440,24);
 			limiteGauche = new Line(20,0,20,768);
@@ -73,10 +87,10 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		//red ou transparent
-		g.setColor(Color.transparent);
+		g.setColor(Color.black);
 		//Dessin de toutes les formes
 		getCarreImage(direction).draw(heroPosX * scale, heroPosY * scale, 0.16f);
-		g.draw(heroHitBox);
+		g.draw(getHeroHitBox());
 		g.draw(limiteEau);
 		g.draw(limiteGauche);
 		g.draw(limiteDroite);
@@ -90,9 +104,9 @@ public class Hero {
 		int fond = Jeu.mapTest.getLayerIndex("Fond");
 		enemy1.update(gc, delta);
 		//HitBox mouvement
-		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
+		getHeroHitBox().setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
-		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
+		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
 		}
 		else {
 			heroPosY += 0.13f;
@@ -101,7 +115,7 @@ public class Hero {
 		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)|| input.isKeyDown(Input.KEY_W)) {
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !heroHitBox.intersects(limiteHaut)) {
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !getHeroHitBox().intersects(limiteHaut)) {
 				if (sautCompteur <= 8.0f) {
 					heroPosY -= 0.3f;
 					sautCompteur+= 0.2f;
@@ -111,7 +125,7 @@ public class Hero {
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
 			direction = Direction.LEFT;
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteGauche)) {
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteGauche)) {
 				heroPosX -= 0.12f;
 				sautCompteur+= 0.05f;
 				gauche = true;
@@ -121,7 +135,7 @@ public class Hero {
 		//D pour aller a droite
 		if (input.isKeyDown(Input.KEY_D) ) {
 			direction = Direction.RIGHT;
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteDroite)) {
+			if(Jeu.mapTest.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteDroite)) {
 				heroPosX += 0.12f;
 				sautCompteur+= 0.05f;
 				droite = true;
@@ -129,18 +143,18 @@ public class Hero {
 			}
 		}
 		//Reset le saut
-		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
+		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
 		}
 		//Limites du bas
-		if(heroHitBox.intersects(limiteEau)) {
+		if(getHeroHitBox().intersects(limiteEau)) {
 			heroPosX = 5;
 			heroPosY = 15;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse == false) {
+		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false) {
 			heroPosX = Enemy.enemyPosX - 1.0f;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse) {
+		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse) {
 			heroPosX = Enemy.enemyPosX + 1.0f;
 		}
 		/*
@@ -168,6 +182,14 @@ public class Hero {
 		break;
 		}
 		return carreImage;
+	}
+
+	public static Rectangle getHeroHitBox() {
+		return heroHitBox;
+	}
+
+	public static void setHeroHitBox(Rectangle heroHitBox) {
+		Hero.heroHitBox = heroHitBox;
 	}
 	
 }
