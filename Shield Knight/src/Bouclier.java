@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-import src.enemy.Direction;
+import src.Enemy.Direction;
 
 public class Bouclier {
 	
@@ -31,6 +31,7 @@ public class Bouclier {
 	public void init(){
 		direction = Direction.RIGHT;
 	}
+	
 //-------------------------------------------------------RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g)  {
 		g.setColor(Color.black);
@@ -38,6 +39,7 @@ public class Bouclier {
 		//g.draw(getBouclierImage(direction));
 		//getBouclierImage(direction).draw(Hero.heroPosX*32+56,Hero.heroPosY*32,24,48);
 	}
+	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta){
 		//Activer les inputs
@@ -45,19 +47,16 @@ public class Bouclier {
 		//Fleche de droite
 		if (input.isKeyDown(Input.KEY_LEFT )) {
 			bouclierUp = false;
-			System.out.println(bouclierUp);
 			direction = Direction.LEFT;
 		}
 		//Fleche de gauche
 		else if (input.isKeyDown(Input.KEY_RIGHT )) {
 			bouclierUp = false;
-			System.out.println(bouclierUp);
 			direction = Direction.RIGHT;
 		}
 		//Fleche du haut
 		else if (input.isKeyDown(Input.KEY_UP )) {
 			bouclierUp = true;
-			System.out.println(bouclierUp);
 			direction = Direction.UP;
 		}
 		else
@@ -75,7 +74,7 @@ public class Bouclier {
 				bouclierHitBox = new Rectangle(Hero.heroPosX*32-25,Hero.heroPosY*32,24,48);
 				break;
 			case UP:
-				bouclierHitBox = new Rectangle(Hero.heroPosX*32,Hero.heroPosY*32-32,48,24);
+				bouclierHitBox = new Rectangle(Hero.heroPosX*32+8,Hero.heroPosY*32-32,48,24);
 				break;
 			case DOWN :
 				break;
