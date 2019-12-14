@@ -5,6 +5,9 @@ import java.util.logging.Logger;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 
+import projectile.Pistol;
+import projectile.Sniper;
+import projectile.SniperBullet;
 import src.Enemy.Direction;
 
 public class Hero {
@@ -16,6 +19,7 @@ public class Hero {
 	private boolean droite;
 	private boolean gauche;
 	//Variable du hero
+	private boolean hit = false;
 	private int heroHP;
 	static float heroPosX ;
 	static float heroPosY ;
@@ -33,6 +37,13 @@ public class Hero {
 
 	public void setHeroPosY(float heroPosY) {
 		this.heroPosY = heroPosY;
+	}
+	public static Rectangle getHeroHitBox() {
+		return heroHitBox;
+	}
+
+	public static void setHeroHitBox(Rectangle heroHitBox) {
+		Hero.heroHitBox = heroHitBox;
 	}
 	private Image carreImage;
 
@@ -54,6 +65,8 @@ public class Hero {
 	private Line limiteHaut;
 	//Ennemy
 	private Enemy enemy1;
+	private SniperBullet sniper;
+	private Pistol pistol;
 	public Hero() {
 		init();
 	}
@@ -82,6 +95,7 @@ public class Hero {
 			//Vecteur de saut
 			velocite = new Vector2f(heroPosX+1,heroPosY+4);
 			position = new Point(heroPosX,heroPosY);
+			pistol = new Pistol();
 	}
 
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
@@ -157,6 +171,11 @@ public class Hero {
 		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse) {
 			heroPosX = Enemy.enemyPosX + 1.0f;
 		}
+		
+		if(isHit()) {
+			//heroPosX = 5;
+			//heroPosY = 15;
+		}
 		/*
 		if(heroHitBox.intersects(Bouclier.bouclierHitBox) && !Bouclier.bouclierUp && Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) == 0) {
 			sautCompteur=9;
@@ -183,13 +202,16 @@ public class Hero {
 		}
 		return carreImage;
 	}
-
-	public static Rectangle getHeroHitBox() {
-		return heroHitBox;
+	public boolean isHit() {
+		hit = false;
+		if(heroHitBox.intersects(sniper.getBullet())|| heroHitBox.intersects(pistol.getBullet())) {
+			hit = true;
+		}
+		return hit;
+		
+		
 	}
 
-	public static void setHeroHitBox(Rectangle heroHitBox) {
-		Hero.heroHitBox = heroHitBox;
-	}
+
 	
 }

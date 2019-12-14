@@ -80,6 +80,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import src.Bouclier;
 import src.Enemy;
 import src.Hero;
 
@@ -88,10 +89,7 @@ enum Direction {
 }
 
 public class Pistol {
-	Rectangle sniper2;
-	private Pistol[] pistol;
-	private int fireRate = 1000;
-	private int current = 0;
+
 	private int time = 0;
 	private Hero hero;
 	private float pistolPosX;
@@ -100,10 +98,18 @@ public class Pistol {
 	private Rectangle pistolero;
 	private float pistoleroPosX;
 	private float pistoleroPosY;
-	private Circle[] bullet;
+	public static Circle bullet;
+	public static Circle counter;
+	private boolean hitBouclier = false;
 	private Direction direction = Direction.LEFT;
 	private boolean exist = false;
 	private boolean active = true;
+	private Bouclier bouclier;
+	public Circle getBullet() {
+		return bullet;
+	}
+
+
 
 	public Pistol(float pistolPosX, float pistolPosY) {
 		this.pistolPosX = pistolPosX;
@@ -117,14 +123,14 @@ public class Pistol {
 //-------------------------------------------------------INIT------------------------------------------------------------------
 
 	public void init() {
-		pistol = new Pistol[3];
-		
+		bouclier = new Bouclier();	
+		hero = new Hero();
 		pistolPosX = 1200;
-		pistolPosY = 500;
+		pistolPosY = 520;
 		pistoleroPosX = 1200;
 		pistoleroPosY = 500;
 		pistolero = new Rectangle(pistoleroPosX, pistoleroPosY, 25, 50);
-		bullet = new Circle[8];
+		bullet = new Circle(pistolPosX,pistolPosY,10,10);
 
 	}
 //-------------------------------------------------------RENDER------------------------------------------------------------------
@@ -135,44 +141,64 @@ public class Pistol {
 		g.draw(pistolero);
 		g.draw(getRadius(direction));
 		if(exist) {
-		g.draw(bullet[current]);
+		g.fill(bullet);
 		}
 
 	}
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 
 	public void update(GameContainer gc, int delta) {
-		System.out.println(time);
 		Input input = gc.getInput();
-		if (getRadius(direction).intersects(hero.getHeroHitBox()) || input.isKeyPressed(input.KEY_1)) {
+		if (getRadius(direction).intersects(hero.getHeroHitBox())) {
 
 			if(active) {
-				bullet[current] = new Circle(pistoleroPosX,pistoleroPosY,20,20);
 				exist = true;
 				time+=delta;
 			}
-				if(current >= bullet.length) {
-					current = 0;
-					time=0;
-				}
+
 
 			
 			switch (direction) {
 			case RIGHT:
-				pistolPosX+=5;
-				bullet[current].setX(pistolPosX);
-
-				break;
-			case LEFT:
-				if(time >2000) {
-					pistolPosX =1200;
-					time = 0;
-
+				if(false) {
+					System.out.println("intersect");
+					pistolPosX-=5;
+					getBullet().setX(pistolPosX);
 				}
 				else {
-				pistolPosX-=5;
-				bullet[current].setX(pistolPosX);
+				pistolPosX+=5;
+				getBullet().setX(pistolPosX);
 				}
+				break;
+			case LEFT:
+				if(bouclier.isHit()==true) {
+					time=0;
+					hitBouclier = true;
+				}
+				else if((bullet.intersects(pistolero)&&  hitBouclier == true)){
+					hitBouclier = false;
+				}
+					 if(hitBouclier == true){
+						pistolPosX+=5;
+						getBullet().setLocation(pistolPosX,pistolPosY);
+						
+					}
+					else if(time >2000 &&  hitBouclier == true) {
+							hitBouclier = false;
+							pistolPosX =1200;
+							time = 0;
+						}
+				
+				else if(time >2000 &&  hitBouclier == false) {
+					pistolPosX =1200;
+					time = 0;
+				}
+				if(hitBouclier == false) {
+				pistolPosX-=5;
+				getBullet().setLocation(pistolPosX,pistolPosY);
+				}
+				
+				
 				break;
 			}
 		}
