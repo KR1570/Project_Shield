@@ -13,3 +13,15 @@
 /Maps.class
 /Bouclier.class
 /Bouclier$Direction.class
+/Maps$Niveau.class
+/Maps$Niveaux.class
+/Enemy$Direction.class
+/Enemy.class
+/Sniper.class
+/Projectile.class
+/Cheats.class
+/Menu.class
+/STATE.class
+/STATE$Direction.class
+/STATE$Jeu.class
+/Boutton.class

@@ -5,28 +5,33 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.tiled.TiledMap;
 
-public class enemy {
+import src.Hero.Direction;
+
+public class Enemy {
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
 	}
 	private int enemyHP;
 	static float enemyPosX;
-	float enemyPosY;
+	static float enemyPosY;
 	static boolean reverse;
 	private Image swat;
-	Rectangle enemy;
-	private Line limite1;
-	private Line limite2;
+	static Rectangle enemy;
+	static Line limite1;
+	static Line limite2;
+	private TiledMap buffer;
 	private Direction direction;
-	public enemy() {
+	public Enemy() {
 		init();
 	}
-	public enemy(int enemyHP,int enemyPosX,int enemyPosY) {
+	public Enemy(int enemyHP,int enemyPosX,int enemyPosY) {
 		init();
 		this.enemyHP = enemyHP;
 		this.enemyPosX= enemyPosX;
@@ -35,55 +40,55 @@ public class enemy {
 	}
 //-------------------------------------------------------INIT------------------------------------------------------------------
 	public void init(){
-		// TODO Auto-generated method stub
 		direction = Direction.RIGHT;
-		enemyPosX = 8;
+		enemyPosX = 12;
 		enemyPosY = 11f;
 		enemyHP = 3;
-		limite1 = new Line(16*31,14*32,16*31,12*32);
-		limite2 = new Line(8*33,14*32,8*33,12*32);
-		//limite1.setLocation(13*32, 12*32);
 		enemy = new Rectangle(enemyPosX*32,enemyPosY*32,32,64);
 		reverse = true;
 		
 	}
+	
 //-------------------------------------------------------RENDER------------------------------------------------------------------
-
 	public void render(GameContainer gc, Graphics g)  {
-		
-		// TODO Auto-generated method stub
 		g.setColor(Color.transparent);
 		g.draw(enemy);
-		g.draw(limite1);
-		g.draw(limite2);
 		getSwat(direction).draw(enemyPosX*32,((enemyPosY)*32),2);
 	}
 	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
-
-
-
-	public void update(GameContainer gc, int delta){
-		// TODO Auto-generated method stub
-		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
-		if(!enemy.intersects(limite1) && reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
+	public void update(GameContainer gc, int delta) {
+		//Maps Level 1
+		if(Maps.compteurLevel == 1) {
+			buffer = Maps.mapLevel1;
+		}
+		if(Maps.compteurLevel == 2) {
+			buffer = Maps.mapLevel2;
+		}
+		if(Maps.compteurLevel == 3) {
+			buffer = Maps.mapLevel3;
+		}
+		//buffer des maps
+		int sol = buffer.getLayerIndex("Sol");
+		//Droite virage à gauche
+		if(buffer.getTileId(Math.round(enemyPosX)+1, Math.round(enemyPosY) +2, sol) == 0 && reverse || enemy.intersects(Hero.limiteDroite) ) {
+			reverse = false;
+		}
+		//Gauche virage à droite
+		if(buffer.getTileId(Math.round(enemyPosX)-1, Math.round(enemyPosY) +2 , sol) == 0 && !reverse || enemy.intersects(Hero.limiteGauche)) {
+			reverse = true;
+		}
+		//Mouvements
+		if (reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.RIGHT;
 			enemyPosX +=0.03;
 			enemy.setLocation(enemyPosX*32, enemyPosY*32);
 		}
-		else {
-			reverse = false;
-		}
-		if(!enemy.intersects(limite2) && reverse == false && !enemy.intersects(Bouclier.bouclierHitBox)) {
+		if (!reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.LEFT;
 			enemyPosX -=0.03;
 			enemy.setLocation(enemyPosX*32, enemyPosY*32);
 		}
-		else {
-			reverse = true;
-		}
-		System.out.println("X" + enemyPosX);
-		System.out.println("Y" + enemyPosY);
 	}
 	public Image getSwat(Direction direction) {
 		switch (direction) {
@@ -95,11 +100,9 @@ public class enemy {
 			}
 			break;
 		case LEFT:
-			
 			try {
 				swat = new Image("./images/swatL.png");
 			} catch (SlickException e) {
-
 				e.printStackTrace();
 			}
 		break;
@@ -107,4 +110,4 @@ public class enemy {
 		return swat;
 		
 	}
-}	
+}
