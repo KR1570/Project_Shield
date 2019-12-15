@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="45" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="mainMenuBackground" tilewidth="32" tileheight="32" tilecount="594" columns="33">
+  <image source="../../../../Pictures/mainMenuBackground.jpg" width="1064" height="604"/>
+ </tileset>
+ <layer id="1" name="Calque 1" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAECtXXVbBWVRgGYLq7u7u7u7sVlBJQGkFKEFBRQunuVFAUA0WkUSQUQZRuCZUOSVHK58x4Zpgz/GdmD1dePBd7/vV+6917r9kzf9QoUaJEIzoxiEksYhOHuMQjPglISCISk4SkJCM5KUhJVELNjPhbxOvw/SPbL1QmvHOo3yPrnE3n7OQgJ7nITdjMiPNCrX2azqFmRta5um41qEktVlGHJz2HiGtr/7c2sncb8b7D3034/FAzI+v8on1fojNd6Eo3wmc+vmfY/Txp7dN0DrV/ZJ1H6jGK0bzDu4zhSZ1DrX2azqFmRtY5lX6pSUNa0pGeDGQkE5nJQlYef+4xXMckFuH3GPE7EOq85pHJSz7yU4CCFKIwRShKMYpTgpKUojRlKEs5ylOBilSiMlWoSjWCdgh1XuuaVY/6NKAhjWhME5rSjOa04BmepSWteI7naU0b2tKO9rxABzrSiaAdQp3X7mb1oCe9eJne9OEV+tKP/gxgIK8yiMG8xhCGMozXeYM3Gc5bvM0IgnYIdV7HmjWO8UxgIpOYzBSmMo3pzGAms5jNHOYyj/ksYCGLWMx7vM8SlhK0wwcyH7KMj/iY5XzCp3zG56zgC75kJV+xiq9ZzRrWso71bGAjm/iGb9nMd2xhK9vYTtAO38v8wA5+ZCe7+Ind/Mwv7GEv+9jPAQ5yiMMc4SjHOM4JfuUkpzjNGX7jd/7gLOcI2uG8zAUuconLXOEq1/iT69zgJre4zR3+4i5/8w/3uM8DHvKIsA9ZVKIRnRjEJBaxiUPQDnFl4hGfBCQkEYlJQlKSkZwUpCQVqUlDWtKRngxkJBOZyUJWspGdHOQkF7nJQ16Cdsgnk58CFKQQhSlCUYpRnBKUpBSlKUNZylGeClSkEpWpQlWqUZ0a1KQWtalDXeoRtEN9mQY0pBGNaUJTmtGcFjzDs7SkFc/xPK1pQ1va0Z4X6EBHOvEiL9GZLnSlG93pQdAOPWV68TK96cMr9KUf/RnAQF5lEIN5jSEMZRiv8wZvMpy3eJsRjGQUo3mHdxnDWMYRtMN4mQlMZBKTmcJUpjGdGcxkFrOZw1zmMZ8FLGQRi3mP91nCUj7gQ5bxER+znE/4lKAdPpP5nBV8wZes5CtW8TWrWcNa1rGeDWxkE9/wLZv5ji1sZRvb+Z4f2MGP7GQXP7GboB1+lvmFPexlH/s5wEEOcZgjHOUYxznBr5zkFKc5w2/8zh+c5RznucBFLnGZK1zlGrcJ0uFP669zg5vcImzGHf7iLn/zD/e4zwMe8oiwP35RiUZ0YhCTWMQmDnGJR3wSkJBEJCYJYfsF6ZBUJhnJSUFKUpGaNKQlHenJQEYykZksZCUb2clBTnKRmzzkJR/5KUBBClGYIhQlaIdiMsUpQUlKUZoylKUc5alARSpRmSpUpRrVqUFNalGbOtSlHvVpQEMa0ZgmNKUZQTuErf+/+RfhbB7l4BAAAA==
+  </data>
+ </layer>
+</map>

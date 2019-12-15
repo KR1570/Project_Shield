@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-up" compressionlevel="-1" width="45" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="gameover" tilewidth="32" tileheight="32" tilecount="390" columns="26">
+  <image source="../../../../Pictures/gameover.jpg" width="852" height="480"/>
+ </tileset>
+ <layer id="1" name="Calque 1" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACp3XZWwUURSG4VkguFuhSHAvWiRIcS2UBHcoUGiguDsUd/cGd/fg7h7crXhwd3gncyed3DBzp/vj+dXdM985e+5tJljTtAHYiFMWkcJvCx9PlEI2AiU+Dn5r7kVa6HlnSjkjXeSUs5lCJHa9FVL049TfTDFju5na5ZSzmYZI7HoLVPTj1J+5E3YztcspZ7MaimEId+gtRNGPU3/mTtjN1C6nNddwjMBIjEJC6iVCYs25N6d+nPozd8Jupm5zZqVGNmRHDuRELuRGHuRFPvghPwoo+nHqz9wJb2daiu+XRhkEoCzKoTwqoCIqoTKqoCqqoTpqIBA1UQtB4mylEFIiFVJL/Zk7EZ2cdahRF/VQHw3QEI3QGE3QFM3QHC3QEq0QjNZog7YIQTu0R6g4W37/yeyDNEhr2Qk3WTvw+Y4IQyd0Rhd0RTd0Rw/0RC/0Rh/0RT/0F3frQAzCYH1+GIphCBdnyymvrxa1E6q8er0RGIlRGI0xGItxGI8JmIhJmIwpmIppmI4ZmnG3zsJszMFczMN8RGjGrqoyh7icsV5vARZiERZjCZZiGZZjBVZiFVZjDdZiHdZjg9jXTdiMLdiKbdiOHS7y+mvu8r4U9XZiF3ZjD/ZiH/bjAA7iEA7jCI7iGI7jBE5qxr6exhmcxTmcxwUt6uypcqvyxhIu8tlLuIwruIpruI4buIlbuI07uIt7uI8HeIhHmrGvj/EET/EMz/FCM86eef6ccjvlDUNGQZ/1K7zGG7zFO7zHB3zEJ3zGF3zFN3zHD/zEL83Y1z/4C426HsRATI9xD1Z1kdsps66EoM86NuIgLuIhPhIgIRIhMZIgKZIhOVIgJVIhtbhb0yAtfJEO6ZHBY9yDwSK305yVd7GgzzoTMiMLsiIbsiMHciIXciMP8iIf/JAfBVDQY9ythVEE/iiKYijuUe+xSZU5TNBnXRKlUBplEICyKIfyqICKqITKqKL/3qiG6qjhMe7WmqiFINSORlZ/LereUO2HOW+5hlVT/t4MzdECLdFK/73RGm3Q1mPcre3Q3ousQYIqs3Xecg0rX8VzvSFnDRXM9xI385ZrWPkrnusNOWu4YL6XuPnfItewClI81xty1gjBfC9xc3/INaxCFc/1hpx1h2C+l7i5P+QaVuGK53pDznpRMN9L3OyzXMMqQvFcb8hZXwr/AAZ8ZGngEAAA
+  </data>
+ </layer>
+</map>
