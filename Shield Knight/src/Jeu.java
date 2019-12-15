@@ -3,6 +3,8 @@ import interfacejeu.InterfacesEnJeu;
 import org.newdawn.slick.tiled.TiledMap;
 
 import interfacejeu.Menu;
+import projectile.Pistol;
+import projectile.Sniper;
 
 //import com.sun.prism.Graphics;
 
@@ -24,9 +26,10 @@ public class Jeu extends BasicGame{
 	private Bouclier bouclier;
 	private Enemy enemy;
 	private Maps maps;
-	private Projectile p;
+	//private Projectile p;
 	private Sniper sniper;
-	private Projectile projectile;
+	private Pistol pistol;
+	//private Projectile projectile;
 	private Menu menu;
 	private InterfacesEnJeu interfaces;
 	//Constructeur du jeu
@@ -44,13 +47,17 @@ public class Jeu extends BasicGame{
 				maps = new Maps();
 				//Enemies
 				enemy = new Enemy();
-				//sniper = new Sniper();
+				pistol= new Pistol();
+				sniper = new Sniper();
+				sniper.init();
+				pistol.init();
+				sniper = new Sniper();
 				//Hero
 				hero = new Hero();
 				//Bouclier
 				bouclier = new Bouclier();
 				//Projectile
-				p = new Projectile();
+				//p = new Projectile();
 				//musique
 				musique = new Music("./Audio/musicDeFond.wav");
 				musique.play();
@@ -89,7 +96,8 @@ public class Jeu extends BasicGame{
 			bouclier.render(gc, g);
 			interfaces.render(gc, g);
 			g.setColor(Color.red);
-			//sniper.render(gc, g);
+			pistol.render(gc, g);
+			sniper.render(gc, g);
 		}
 	}
 
@@ -113,6 +121,8 @@ public class Jeu extends BasicGame{
 			enemy.update(gc, delta);
 			bouclier.update(gc, delta);
 			interfaces.update(gc, delta);
+			pistol.update(gc, delta);
+			sniper.update(gc, delta,Hero.heroPosX,Hero.heroPosY);
 		}
 	}
 }

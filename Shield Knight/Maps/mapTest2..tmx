@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="45" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="basicTileset" tilewidth="32" tileheight="32" tilecount="0" columns="8">
+  <image source="../../../../../../eclipse-workspace/TP4/maps/basicTileset.png" width="256" height="512"/>
+ </tileset>
+ <tileset firstgid="1" name="BG" tilewidth="32" tileheight="32" tilecount="713" columns="31">
+  <image source="../../../../../../Pictures/BG/BG.png" width="1000" height="750"/>
+ </tileset>
+ <tileset firstgid="714" name="1" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="../../../../../../Pictures/Tiles/1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="730" name="2" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="../../../../../../Pictures/Tiles/2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="746" name="3" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="../../../../../../Pictures/Tiles/3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="762" name="13" tilewidth="32" tileheight="32" tilecount="8" columns="4">
+  <image source="../../../../../../Pictures/Tiles/13.png" width="128" height="93"/>
+ </tileset>
+ <tileset firstgid="770" name="14" tilewidth="32" tileheight="32" tilecount="8" columns="4">
+  <image source="../../../../../../Pictures/Tiles/14.png" width="128" height="93"/>
+ </tileset>
+ <tileset firstgid="778" name="15" tilewidth="32" tileheight="32" tilecount="8" columns="4">
+  <image source="../../../../../../Pictures/Tiles/15.png" width="128" height="93"/>
+ </tileset>
+ <tileset firstgid="786" name="17" tilewidth="32" tileheight="32" tilecount="12" columns="4">
+  <image source="../../../../../../Pictures/Tiles/17.png" width="128" height="99"/>
+ </tileset>
+ <tileset firstgid="798" name="Mushroom_1" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="../../../../../../Pictures/Object/Mushroom_1.png" width="49" height="41"/>
+ </tileset>
+ <tileset firstgid="799" name="Mushroom_2" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="../../../../../../Pictures/Object/Mushroom_2.png" width="50" height="41"/>
+ </tileset>
+ <tileset firstgid="800" name="Bush (3)" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="../../../../../../Pictures/Object/Bush (3).png" width="73" height="47"/>
+ </tileset>
+ <tileset firstgid="802" name="Bush (2)" tilewidth="32" tileheight="32" tilecount="8" columns="4">
+  <image source="../../../../../../Pictures/Object/Bush (2).png" width="133" height="65"/>
+ </tileset>
+ <tileset firstgid="810" name="Stone" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="../../../../../../Pictures/Object/Stone.png" width="90" height="54"/>
+ </tileset>
+ <tileset firstgid="812" name="Tree_2" tilewidth="32" tileheight="32" tilecount="72" columns="8">
+  <image source="../../../../../../Pictures/Object/Tree_2.png" width="282" height="301"/>
+ </tileset>
+ <tileset firstgid="884" name="Tree_1" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="../../../../../../Pictures/Object/Tree_1.png" width="116" height="44"/>
+ </tileset>
+ <layer id="1" name="Fond" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAECsXWQ9dYVwCG0Xxf48a2bdu2bdu2bdu2bbNtbLZJGbZBjd2/cAftYI/uetez7uScExImTJhQPiEs4QhPBCISich8ShSiEo3oxCAmsYhNHOISj/gkICGJSEwSkpKM5PzXuxDN/+tfc2rnIjd5yEs+8lOAghSiMEUoSjFSkJJUpCYNaUlHejKQkUxkJgtZyUZ2chC0XcO2JrWoTR3qUo/6NKAhjWhME5pSnBKUpBSlKUNZylGeClSkEpWpQlWqUZ2g7e62PehJL3rTh770oz8DGMggBjOEZjSnBS1pRWva0JZ2tKcDHelEZ7rQlW4EbU+znc4MZjKL2cxhLvOYzwIWsojFDGUYwxnBSEYxmjGMZRzjmcBEJjGZKUwlaHur7Ta2s4Od7GI3e9jLPvZzgIMcYglLWcZyVrCSVaxmDWtZx3o2sJFNbGYLQduf2X7OF1zhKte4zg1ucovb3OEu9zjMEY5yjOOc4CSnOM0ZznKO81zgIpe4TND2C9uXvOI1b3jLj/zEO97zgY/8zC/c5wEPecRjnvCUL/mKZzzna77hW77je34gaDtyiPuCKEQlGtGJQUxiEZs4xCUe8flV8zd+5w/+5C/+JozvIYTyCWEJR3giEJFIBG1ntM1EZrKQlWxkJwc5yUVu8pCXfCQgIYlITBKSkozkpCAlqUhNGtKSjvRkIGi7gm1FKlGZKlSlGtWpQU1qUZs61CU/BShIIQpThKIUozglKEkpSlOGspSjPEHb7W070JFOdKYLXelGd3rQk170pg/1qE8DGtKIxjShKc1oTgta0orWtKEt7QjaHmc7nglMZBKTmcJUpjGdGcxkFrPpSz/6M4CBDGIwQxjKMIYzgpGMYjRjGEvQ9lrbdaxnAxvZxGa2sJVtbGcHO9nFHOYyj/ksYCGLWMwSlrKM5axgJatYzRqCts/YnuUc57nARS5xmc/4nC+4wlWusZs97GUf+znAQQ5xmCMc5RjHOcFJTnGaoO1nts/5mm/4lu/4nh94wUte8Zo3vOU6N7jJLW5zh7vc4z4PeMgjHvOEp3zJVwRth4Y6QwlLOMITgYhEIjKfEoWoRCM6P2r+xDve84GP/Mwv/Mpv/M4f/Mlf/M2/D+8QgrZT2qYiNWlISzrSk4GMZCIzWchKNmIQk1jEJg5xiUd8EpCQRCQmCUlJRnJSELRdwrYkpShNGcpSjvJUoCKVqEwVqpKdHOQkF7nJQ17ykZ8CFKQQhSlCUYpRnKDt5rYtaEkrWtOGtrSjPR3oSCc604VqVKcGNalFbepQl3rUpwENaURjmtCUZgRtD7MdzghGMorRjGEs4xjPBCYyicl0pRvd6UFPetGbPvSlH/0ZwEAGMZghDCVoe6ntMpazgpWsYjVrWMs61rOBjWxiClOZxnRmMJNZzGYOc5nHfBawkEUsZglB20dsj3KM45zgJKc4zRnOco7zXOAim9nCVraxnR3sZBe72cNe9rGfAxzkEIcJ2v4HAmMx2eAQAAA=
+  </data>
+ </layer>
+ <layer id="3" name="Objet" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAECu3U10oDQRQG4AXfwJrc2Y1gx44djQU7lkQ0UbEjWN7/wi8kQi69CGFW5odvZocZmMNhd5MkJnYgdiB2IHYgduDvHehuSZIeYmIH/kMHRrzLo4wxzgSTTBFqptU2wyxzzLPAIqFmSW3LrLDKGutsEGo21bZFnm122GWPRqXR/9N9tR1wyBHHnHBKqDlT2zkXXFKgyBWh5lptN5Qoc8sd91TSa+6jv24eqO1VTzR/fHD/I08888Irb1QyaB4iVzcP1/aqJ5o/vrv/9xv58PzJF9+kMW3qbqeDVtKw7lJnhiydpGH9A+jU3rjgEAAA
+  </data>
+ </layer>
+ <layer id="2" name="Sol" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAECu3VxwrDMAyAYbfp3n3/N+qel+556Z6X7j+HQAi5OORgigQfwSZWhBCOUhLSAemAdEA6IB343w48oko98cIbGUupLHLIw8T4UOcXivoiKKCIEsqQMKMDYc9W2Pn8uhT2bIWdz69m2TOnA+4ZjXIXWYghDlPvVfeMJqgziRTSkHvVnNnSrWTAP3KIEcbQXW84s8UOe3ijwl4VNdShm99533nadU4wxQzzAOsDZ4444QxvNNhrooU2gn7PfW5BniVWWEN3feHMFTfc4Y0Oe1300Idufud952nX+QMRKofn4BAAAA==
+  </data>
+ </layer>
+</map>

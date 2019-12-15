@@ -1,5 +1,8 @@
 package src;
-
+import projectile.Pistol;
+import src.Enemy.Direction;
+import projectile.Sniper;
+import projectile.SniperBullet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.*;
@@ -20,6 +23,7 @@ public class Hero {
 	private Animation anim_LEFT;
 	private Animation anim_NOTHINGLEFT;
 	private Animation anim_NOTHING;
+	private boolean hit = false;
 	private boolean droite;
 	private boolean gauche;
 	//Variable du hero
@@ -45,7 +49,7 @@ public class Hero {
 	//Variable grosseur tuile
 	private float scale = 32;
 	//Hitbox
-	static Rectangle heroHitBox;
+	public static Rectangle heroHitBox;
 
 	//Ligne 
 	static Line limiteEau;
@@ -54,6 +58,8 @@ public class Hero {
 	private Line limiteHaut;
 	//Ennemy
 	private Enemy enemy1;
+	private SniperBullet sniper;
+	private Pistol pistol;
 	static TiledMap buffer;
 	public Hero() {
 		init();
@@ -73,7 +79,7 @@ public class Hero {
 			direction = Direction.NOTHING;
 			//intialisation de la position du hero
 			//heroImage = new Image("./images/knight.png");
-			heroHitBox = new Rectangle(heroPosX*32,heroPosY*32,48,48);
+			setHeroHitBox(new Rectangle(heroPosX*32,heroPosY*32,48,48));
 			//Limites de la map
 			limiteHaut = new Line(0,24,1440,24);
 			limiteGauche = new Line(20,0,20,768);
@@ -99,10 +105,10 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		//couleur des formes red ou transparent
-		g.setColor(Color.transparent);
+		g.setColor(Color.red);
 		//Dessin de toutes les formes
 		getCarreImage(direction).draw(heroPosX * 32, heroPosY * 32 - 26,84,84);
-		g.draw(heroHitBox);
+		g.draw(getHeroHitBox());
 		g.draw(limiteEau);
 		g.draw(limiteGauche);
 		g.draw(limiteDroite);
@@ -139,11 +145,10 @@ public class Hero {
 		if(Maps.compteurLevel == 3) {
 			buffer = Maps.mapLevel3;
 		}
-		//Maps level 2
 		int sol = buffer.getLayerIndex("Sol");
 		enemy1.update(gc, delta);
 		//HitBox mouvement
-		heroHitBox.setLocation(heroPosX*32,heroPosY*32);
+		getHeroHitBox().setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
 		if(buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
 		}
@@ -155,7 +160,7 @@ public class Hero {
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE) || input.isKeyDown(Input.KEY_W)) {
 			direction = Direction.UP;
-			if(buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !heroHitBox.intersects(limiteHaut)) {
+			if(buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !getHeroHitBox().intersects(limiteHaut)) {
 				if (sautCompteur <= 8.0f) {
 					heroPosY -= 0.3f;
 					sautCompteur+= 0.2f;
@@ -168,7 +173,7 @@ public class Hero {
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
 			direction = Direction.LEFT;
-			if(buffer.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteGauche)) {
+			if(buffer.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteGauche)) {
 				heroPosX -= 0.12f;
 				sautCompteur+= 0.05f;
 				gauche = true;
@@ -178,7 +183,7 @@ public class Hero {
 		//D pour aller a droite
 		else if (input.isKeyDown(Input.KEY_D) ) {
 			direction = Direction.RIGHT;
-			if(buffer.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !heroHitBox.intersects(limiteDroite)) {
+			if(buffer.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteDroite)) {
 				heroPosX += 0.12f;
 				sautCompteur+= 0.05f;
 				droite = true;
@@ -194,21 +199,21 @@ public class Hero {
 		
 		
 		//Reset le saut
-		if (buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
+		if (buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
 		}
 		//Limites du bas
-		if(heroHitBox.intersects(limiteEau)) {
+		if(getHeroHitBox().intersects(limiteEau) || isHit()) {
 			heroPosX = 5;
 			heroPosY = 15;
 			InterfacesEnJeu.nombreVieRestante--;
 			System.out.println(InterfacesEnJeu.nombreVieRestante);
 		}
 		//Ennemie swat
-		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse == false) {
+		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false) {
 			heroPosX = Enemy.enemyPosX - 1.5f;
 		}
-		else if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse) {
+		else if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse) {
 			heroPosX = Enemy.enemyPosX + 1.5f;
 		}
 }
@@ -233,6 +238,57 @@ public class Hero {
 				break;
 		}
 		return anim;
+	}
+	public boolean isHit() {
+		hit = false;
+		if(getHeroHitBox().intersects(sniper.getBullet())|| getHeroHitBox().intersects(pistol.bullet)) {
+			hit = true;
+		}
+		return hit;
+	}
+	public static float getHeroPosX() {
+		return heroPosX;
+	}
+	public void setHeroPosX(float heroPosX) {
+		this.heroPosX = heroPosX;
+	}
+
+	public static float getHeroPosY() {
+		return heroPosY;
+	}
+
+	public void setHeroPosY(float heroPosY) {
+		this.heroPosY = heroPosY;
+	}
+	public static Rectangle getHeroHitBox() {
+		return heroHitBox;
+	}
+	public static void setHeroHitBox(Rectangle heroHitBox) {
+		Hero.heroHitBox = heroHitBox;
+	}
+
+	public static Line getLimiteEau() {
+		return limiteEau;
+	}
+
+	public static void setLimiteEau(Line limiteEau) {
+		Hero.limiteEau = limiteEau;
+	}
+
+	public static Line getLimiteGauche() {
+		return limiteGauche;
+	}
+
+	public static void setLimiteGauche(Line limiteGauche) {
+		Hero.limiteGauche = limiteGauche;
+	}
+
+	public static Line getLimiteDroite() {
+		return limiteDroite;
+	}
+
+	public static void setLimiteDroite(Line limiteDroite) {
+		Hero.limiteDroite = limiteDroite;
 	}
 	
 }
