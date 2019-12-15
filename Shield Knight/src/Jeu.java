@@ -1,6 +1,8 @@
 package src;
-
+import interfacejeu.InterfacesEnJeu;
 import org.newdawn.slick.tiled.TiledMap;
+
+import interfacejeu.Menu;
 
 //import com.sun.prism.Graphics;
 
@@ -26,6 +28,7 @@ public class Jeu extends BasicGame{
 	private Sniper sniper;
 	private Projectile projectile;
 	private Menu menu;
+	private InterfacesEnJeu interfaces;
 	//Constructeur du jeu
 	public Jeu(String title) 
 	{
@@ -54,6 +57,7 @@ public class Jeu extends BasicGame{
 				musique.setVolume(0.15f);
 				//Menu
 				menu = new Menu();
+				interfaces = new InterfacesEnJeu();
 				
 				
 			}
@@ -73,11 +77,17 @@ public class Jeu extends BasicGame{
 			maps.render(gc, g);
 			menu.render(gc, g);
 		}
+		//Game Over
+		else if(Maps.compteurLevel == 1000) {
+			interfaces.render(gc, g);
+			maps.render(gc, g);
+		}
 		else {
 			maps.render(gc, g);
 			hero.render(gc, g);
 			enemy.render(gc,g);
 			bouclier.render(gc, g);
+			interfaces.render(gc, g);
 			g.setColor(Color.red);
 			//sniper.render(gc, g);
 		}
@@ -92,12 +102,17 @@ public class Jeu extends BasicGame{
 			maps.update(gc, delta);
 			menu.update(gc, delta);
 		}
+		//Game Over
+		else if(Maps.compteurLevel == 1000) {
+			interfaces.update(gc, delta);
+			maps.update(gc, delta);
+		}
 		else {
 			maps.update(gc, delta);
 			hero.update(gc, delta);
 			enemy.update(gc, delta);
 			bouclier.update(gc, delta);
-			//sniper.update(gc, delta);
+			interfaces.update(gc, delta);
 		}
 	}
 }
