@@ -65,7 +65,7 @@ public class Enemy {
 
 	public void update(GameContainer gc, int delta){
 		// TODO Auto-generated method stub
-		int platformes = Jeu.mapTest.getLayerIndex("Platformes");
+		int platformes = Jeu.getMapTest().getLayerIndex("Platformes");
 		if(!enemy.intersects(limite1) && reverse && !enemy.intersects(Bouclier.bouclierHitBox)) {
 			direction = Direction.RIGHT;
 			enemyPosX +=0.03;

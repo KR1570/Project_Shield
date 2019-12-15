@@ -8,13 +8,15 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import src.Bouclier;
 import src.Enemy;
 import src.Hero;
+import src.Jeu;
 
 public class Sniper extends Enemy{
 	Rectangle sniper;
 	private SniperBullet[] SniperBullets;
-	private SniperBullet p;
+	private SniperBullet bullet;
 	private int fireRate = 1000;
 	private int current = 0;
 	private int time = 0;
@@ -23,7 +25,8 @@ public class Sniper extends Enemy{
 	static Circle range;
 	private float X;
 	private float Y;
-	private boolean counter;
+	private Bouclier bouclier;
+	private boolean hitBouclier;
 	
 	public Sniper(int sniperHp,int sniperPosX,int sniperPosY) {
 		super(sniperHp,sniperPosX,sniperPosY);
@@ -35,10 +38,10 @@ public class Sniper extends Enemy{
 //-------------------------------------------------------INIT------------------------------------------------------------------
 
 	public void init() {
-		counter = false;
-		hero = new Hero();
-		p = new SniperBullet();
-		p.init(1200, 260);
+		hitBouclier = false;
+		bouclier = new Bouclier();		hero = new Hero();
+		bullet = new SniperBullet();
+		bullet.init(1200, 260);
 		sniper = new Rectangle(1200,260,50,25);
 		SniperBullets = new SniperBullet[8];
 		
@@ -54,11 +57,14 @@ public class Sniper extends Enemy{
 	
 	public  void render(GameContainer gc, Graphics g) {
 		g.draw(sniper);
-		if(range.intersects(hero.heroHitBox)) {
+
 		g.draw(laser);
-		g.draw(range);
+	//	g.draw(range);
+		if(bullet.isActive()==true) {
 		for(SniperBullet p : SniperBullets) {
 			p.render(gc, g);
+			
+		
 		}
 		}
 	}
@@ -66,20 +72,20 @@ public class Sniper extends Enemy{
 
 	public void update(GameContainer gc, int delta,float heroX,float heroY) {
 		//calcul le vecteur vers le joueur
-		if(!p.bullet.intersects(hero.heroHitBox)) {
+		int sol = Jeu.getMapTest().getLayerIndex("Sol");
+
+		if(bouclier.isHitSniper()==true) {
+			SniperBullets[current].setPosition(new Vector2f(2,2)); 
+			bullet.bullet.setLocation(0, 0);
+
+		}
+
+		else {
 			X= (heroX*32)-1200;
 			Y= ((heroY*32)+35)-260;
 
-		}
-		else {
-			X=1200-(heroX*32);
-			Y=260-(heroY*32);
-		}
-		//si le hero n'est plus dans le range le SniperBullet retourne a son point de depart
-		if(!range.intersects(hero.heroHitBox)) {
-		SniperBullets[current] = new SniperBullet(new Vector2f(1200,260), new Vector2f(1200,260));
-		}
-		else {
+
+			bullet.setActive(true);
 		time += delta;
 		//laser qui suit le joueur
 		laser.set(heroX*32+32,heroY*32+32,1200,260);
@@ -93,16 +99,16 @@ public class Sniper extends Enemy{
 				time=0;
 			}
 		}
-
-			
-		//counter 
-		
-
+		}
 		
 		for(SniperBullet p : SniperBullets) {
 			p.update(delta,5000f);
 		}
+		if(bullet.bullet.intersects(sniper)&& hitBouclier == true) {
+			hitBouclier = false;
+		}
+
 	
 	}
 	}
-}
+

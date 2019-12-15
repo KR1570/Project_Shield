@@ -139,7 +139,7 @@ public class Pistol {
 		g.setColor(Color.black);
 		//g.draw(bullet);
 		g.draw(pistolero);
-		g.draw(getRadius(direction));
+		//g.draw(getRadius(direction));
 		if(exist) {
 		g.fill(bullet);
 		}
@@ -149,7 +149,7 @@ public class Pistol {
 
 	public void update(GameContainer gc, int delta) {
 		Input input = gc.getInput();
-		if (getRadius(direction).intersects(hero.getHeroHitBox())) {
+
 
 			if(active) {
 				exist = true;
@@ -160,18 +160,35 @@ public class Pistol {
 			
 			switch (direction) {
 			case RIGHT:
-				if(false) {
-					System.out.println("intersect");
-					pistolPosX-=5;
-					getBullet().setX(pistolPosX);
+				if(bouclier.isHitPistol()==true) {
+					time=0;
+					hitBouclier = true;
 				}
-				else {
+				else if((bullet.intersects(pistolero)&&  hitBouclier == true)){
+					hitBouclier = false;
+				}
+					 if(hitBouclier == true){
+						pistolPosX-=5;
+						getBullet().setLocation(pistolPosX,pistolPosY);
+						
+					}
+					else if(time >2000 &&  hitBouclier == true) {
+							hitBouclier = false;
+							pistolPosX =1200;
+							time = 0;
+						}
+				
+				else if(time >2000 &&  hitBouclier == false) {
+					pistolPosX =1200;
+					time = 0;
+				}
+				if(hitBouclier == false) {
 				pistolPosX+=5;
-				getBullet().setX(pistolPosX);
+				getBullet().setLocation(pistolPosX,pistolPosY);
 				}
 				break;
 			case LEFT:
-				if(bouclier.isHit()==true) {
+				if(bouclier.isHitPistol()==true) {
 					time=0;
 					hitBouclier = true;
 				}
@@ -201,28 +218,11 @@ public class Pistol {
 				
 				break;
 			}
-		}
-		else {
-			exist = false;
-			pistolPosX =1200;
-		}
+		
+
 	}
 
-	public Rectangle getRadius(Direction direction) {
-		switch (direction) {
-		case RIGHT:
 
-			radius = new Rectangle(pistoleroPosX - 5, pistoleroPosY, 50, 50);
-
-			break;
-		case LEFT:
-
-			radius = new Rectangle(pistoleroPosX - 600, pistoleroPosY, 500, 50);
-
-			break;
-		}
-		return radius;
-	}
 
 }
 

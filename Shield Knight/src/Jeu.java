@@ -19,7 +19,7 @@ import org.newdawn.slick.geom.Vector2f;
 public class Jeu extends BasicGame{
 
 	//Variables
-	static TiledMap mapTest;
+	private static TiledMap mapTest;
 	static TiledMap mapTest2;
 	//projectile
 
@@ -34,6 +34,14 @@ public class Jeu extends BasicGame{
 	private Music musique;
 	private int mapTestX;
 	private int mapTestY;
+
+	public static TiledMap getMapTest() {
+		return mapTest;
+	}
+
+	public static void setMapTest(TiledMap mapTest) {
+		Jeu.mapTest = mapTest;
+	}
 
 	//Constructeur du jeu
 	public Jeu(String title) 
@@ -51,7 +59,7 @@ public class Jeu extends BasicGame{
 			sniper = new Sniper();
 			//initialisation de la mapTest
 			// = new TiledMap("./maps/mapTest.tmx"); 
-			mapTest = new TiledMap("./maps/mapTest2.tmx");
+			setMapTest(new TiledMap("./maps/mapTest2.tmx"));
 			mapTest2 = new TiledMap("./maps/mapTest.tmx");
 			//Initialisation du hero
 			carre = new Hero();
@@ -78,7 +86,7 @@ public class Jeu extends BasicGame{
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		//Dessin de la map
-		mapTest.render(0, 0);
+		getMapTest().render(0, 0);
 		g.setColor(Color.red);
 		pistol.render(gc, g);
 		sniper.render(gc, g);

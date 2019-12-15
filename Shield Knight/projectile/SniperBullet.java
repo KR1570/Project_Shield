@@ -76,8 +76,9 @@ public class SniperBullet {
 
 	public void init(int posX, int posY) {
 		// TODO Auto-generated method stub
-		bullet = new Circle(20, 20, 12);
+		bullet = new Circle(200, 20, 12);
 		position = new Vector2f(posX, posY);
+		
 
 	}
 

@@ -22,6 +22,7 @@ public class Bouclier {
 	private float bouclierPosX;
 	private float bouclierPosY;
 	private boolean hit =false;
+	private boolean hits=false;
 	private Pistol pistol;
 	private SniperBullet sniper;
 	public Bouclier() {
@@ -128,7 +129,7 @@ public class Bouclier {
 		}
 		return bouclierImage;
 	}
-	public boolean isHit() {
+	public boolean isHitPistol() {
 		if(bouclierHitBox.intersects(pistol.getBullet())) {
 			hit = true;
 		}
@@ -136,6 +137,15 @@ public class Bouclier {
 			hit = false;
 		}
 		return hit;
+	}
+	public boolean isHitSniper() {
+		if(bouclierHitBox.intersects(sniper.getBullet())) {
+			hits = true;
+		}
+		else {
+			hits = false;
+		}
+		return hits;
 	}
 
 }

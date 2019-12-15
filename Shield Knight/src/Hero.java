@@ -114,13 +114,13 @@ public class Hero {
 	
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
-		int sol = Jeu.mapTest.getLayerIndex("Sol");
-		int fond = Jeu.mapTest.getLayerIndex("Fond");
+		int sol = Jeu.getMapTest().getLayerIndex("Sol");
+		int fond = Jeu.getMapTest().getLayerIndex("Fond");
 		enemy1.update(gc, delta);
 		//HitBox mouvement
 		getHeroHitBox().setLocation(heroPosX*32,heroPosY*32);
 		//Gravité
-		if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
+		if(Jeu.getMapTest().getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
 		}
 		else {
 			heroPosY += 0.13f;
@@ -129,7 +129,7 @@ public class Hero {
 		Input input = gc.getInput();
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE)|| input.isKeyDown(Input.KEY_W)) {
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !getHeroHitBox().intersects(limiteHaut)) {
+			if(Jeu.getMapTest().getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !getHeroHitBox().intersects(limiteHaut)) {
 				if (sautCompteur <= 8.0f) {
 					heroPosY -= 0.3f;
 					sautCompteur+= 0.2f;
@@ -139,7 +139,7 @@ public class Hero {
 		//A pour aller a gauche
 		if (input.isKeyDown(Input.KEY_A) ) {
 			direction = Direction.LEFT;
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteGauche)) {
+			if(Jeu.getMapTest().getTileId(Math.round(heroPosX) - 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteGauche)) {
 				heroPosX -= 0.12f;
 				sautCompteur+= 0.05f;
 				gauche = true;
@@ -149,7 +149,7 @@ public class Hero {
 		//D pour aller a droite
 		if (input.isKeyDown(Input.KEY_D) ) {
 			direction = Direction.RIGHT;
-			if(Jeu.mapTest.getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteDroite)) {
+			if(Jeu.getMapTest().getTileId(Math.round(heroPosX) + 1, Math.round(heroPosY), sol) == 0 && !getHeroHitBox().intersects(limiteDroite)) {
 				heroPosX += 0.12f;
 				sautCompteur+= 0.05f;
 				droite = true;
@@ -157,7 +157,7 @@ public class Hero {
 			}
 		}
 		//Reset le saut
-		if (Jeu.mapTest.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
+		if (Jeu.getMapTest().getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
 		}
 		//Limites du bas
