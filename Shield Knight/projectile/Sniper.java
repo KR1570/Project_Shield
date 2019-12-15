@@ -13,6 +13,7 @@ import src.Bouclier;
 import src.Enemy;
 import src.Hero;
 import src.Jeu;
+import src.Maps;
 
 public class Sniper extends Enemy{
 	Rectangle sniper;
@@ -74,14 +75,22 @@ public class Sniper extends Enemy{
 
 	public void update(GameContainer gc, int delta,float heroX,float heroY) {
 		//calcul le vecteur vers le joueur
-		//int sol = buffer.getLayerIndex("Sol");
-
-		if(bouclier.isHitSniper()==true ) {
+		//Maps Level 1
+				if(Maps.compteurLevel == 1) {
+					buffer = Maps.mapLevel1;
+				}
+				if(Maps.compteurLevel == 2) {
+					buffer = Maps.mapLevel2;
+				}
+				if(Maps.compteurLevel == 3) {
+					buffer = Maps.mapLevel3;
+				}
+		int sol = buffer.getLayerIndex("Sol");
+		// || buffer.getTileId(Math.round(bullet.bullet.getCenterX()) , Math.round(bullet.bullet.getCenterY()), sol) != 0
+		if(bouclier.isHitSniper() == true) {
 			SniperBullets[current].setPosition(new Vector2f(2,2)); 
 			bullet.bullet.setLocation(0, 0);
-
 		}
-
 		else {
 			X= (heroX*32)-1200;
 			Y= ((heroY*32)+35)-260;

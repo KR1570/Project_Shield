@@ -89,7 +89,6 @@ public class SniperBullet {
 			g.setColor(Color.red);
 			g.draw(bullet);
 		}
-
 	}
 
 	public void update(int delta, float vitesse) {

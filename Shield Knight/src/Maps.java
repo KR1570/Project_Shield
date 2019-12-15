@@ -12,9 +12,9 @@ import javafx.scene.shape.Line;
 public class Maps {
 	private TiledMap mapMenu;
 	private TiledMap mapGameOver;
-	static TiledMap mapLevel1;
-	static TiledMap mapLevel2;
-	static TiledMap mapLevel3;
+	public static TiledMap mapLevel1;
+	public static TiledMap mapLevel2;
+	public static TiledMap mapLevel3;
 	
 	public static int compteurLevel = 0;
 	

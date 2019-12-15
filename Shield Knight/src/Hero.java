@@ -208,6 +208,7 @@ public class Hero {
 			heroPosY = 15;
 			InterfacesEnJeu.nombreVieRestante--;
 			System.out.println(InterfacesEnJeu.nombreVieRestante);
+			Maps.compteurLevel = 1;
 		}
 		//Ennemie swat
 		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false) {
