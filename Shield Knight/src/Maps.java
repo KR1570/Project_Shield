@@ -2,18 +2,21 @@ package src;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import interfacejeu.InterfacesEnJeu;
 import javafx.scene.shape.Line;
 
 public class Maps {
 	private TiledMap mapMenu;
+	private TiledMap mapGameOver;
 	static TiledMap mapLevel1;
 	static TiledMap mapLevel2;
 	static TiledMap mapLevel3;
 	
-	static int compteurLevel = 0;
+	public static int compteurLevel = 0;
 	
 
 	public Maps(){
@@ -26,14 +29,14 @@ public class Maps {
 			mapLevel2 = new TiledMap("./Maps/level1-2.tmx");
 			mapLevel3 = new TiledMap("./Maps/level1-3.tmx");
 			mapMenu = new TiledMap("./Maps/menu.tmx");
+			mapGameOver = new TiledMap("./Maps/gameOver.tmx");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
-	public void render(GameContainer gc, Graphics g){
-		
+	public void render(GameContainer gc, Graphics g) {
 		//Render de la map
 		switch(compteurLevel) {
 			case 0 :
@@ -47,6 +50,9 @@ public class Maps {
 				break;
 			case 3 :
 				mapLevel3.render(0,0);
+				break;
+			case 1000 :
+				mapGameOver.render(0, 0);
 				break;
 		}
 		
@@ -81,6 +87,15 @@ public class Maps {
 			Enemy.enemyPosX = 12;
 			Enemy.enemyPosY = 4;
 			Hero.heroPosX = 2;
+		}
+		//Game Over
+		else if (compteurLevel == 1000) {
+			Input input = gc.getInput();
+			//Recommencer
+			if (input.isKeyPressed(Input.KEY_ENTER)) {
+				compteurLevel = 0;
+				InterfacesEnJeu.nombreVieRestante = 3;
+			}
 		}
 	}
 }

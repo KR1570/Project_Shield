@@ -1,6 +1,8 @@
-package src;
+package interfacejeu;
 
 import org.newdawn.slick.*;
+import src.Boutton;
+import src.Maps;
 
 public class Menu{
 	

@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import src.Enemy.Direction;
-
+import interfacejeu.InterfacesEnJeu;
 public class Hero {
 	//Direction du hero
 	enum Direction{
@@ -112,8 +112,8 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
 		//Position
-		System.out.println("X : " + heroPosX);
-		System.out.println("Y : " + heroPosY);
+		//System.out.println("X : " + heroPosX);
+		//System.out.println("Y : " + heroPosY);
 		//animation 
 		switch (direction) {
 		case UP:
@@ -189,7 +189,7 @@ public class Hero {
 			direction = Direction.NOTHING;
 		}
 		if (input.isKeyPressed(Input.KEY_ESCAPE) ) {
-			System.exit(0);
+			Maps.compteurLevel = 0;
 		}
 		
 		
@@ -201,15 +201,17 @@ public class Hero {
 		if(heroHitBox.intersects(limiteEau)) {
 			heroPosX = 5;
 			heroPosY = 15;
+			InterfacesEnJeu.nombreVieRestante--;
+			System.out.println(InterfacesEnJeu.nombreVieRestante);
 		}
+		//Ennemie swat
 		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse == false) {
-			heroPosX = Enemy.enemyPosX - 1.0f;
+			heroPosX = Enemy.enemyPosX - 1.5f;
 		}
-		if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse) {
-			heroPosX = Enemy.enemyPosX + 1.0f;
+		else if(heroHitBox.intersects(enemy1.enemy) && Enemy.reverse) {
+			heroPosX = Enemy.enemyPosX + 1.5f;
 		}
 }
-	
 	//Direction du hero avec images
 	public Animation getCarreImage(Direction direction) {
 		Animation anim = new Animation(false);
