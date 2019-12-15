@@ -87,7 +87,7 @@ public class Sniper extends Enemy{
 				}
 		int sol = buffer.getLayerIndex("Sol");
 		// || buffer.getTileId(Math.round(bullet.bullet.getCenterX()) , Math.round(bullet.bullet.getCenterY()), sol) != 0
-		if(bouclier.isHitSniper() == true) {
+		if(bouclier.isHitSniper() == true  || hero.isHit()|| buffer.getTileId(Math.round(hero.getHeroPosX()) , Math.round(hero.getHeroPosY())-2, sol) != 0) {
 			SniperBullets[current].setPosition(new Vector2f(2,2)); 
 			bullet.bullet.setLocation(0, 0);
 		}

@@ -4,10 +4,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
-
 import interfacejeu.InterfacesEnJeu;
-import javafx.scene.shape.Line;
+import projectile.Pistol;
 
 public class Maps {
 	private TiledMap mapMenu;
@@ -65,21 +65,35 @@ public class Maps {
 			compteurLevel = 1;
 			Enemy.enemyPosX = 12;
 			Enemy.enemyPosY = 11;
+			Pistol.pistoleroPosX = 26;
+			Pistol.pistoleroPosY = 16;
 			Hero.heroPosX = 40;
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
 		}
 		//Level 1-2
 		else if(compteurLevel == 1 && Hero.heroHitBox.intersects(Hero.limiteDroite)){
 			compteurLevel = 2;
 			Hero.heroPosX = 2;
+			Pistol.pistoleroPosX = 16;
+			Pistol.pistoleroPosY = 7;
 			Enemy.enemyPosX = 24;
 			Enemy.enemyPosY = 15;
 			Enemy.enemy.setLocation(Enemy.enemyPosX*32, Enemy.enemyPosY*32);
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
 		}
 		else if (compteurLevel == 3 && Hero.heroHitBox.intersects(Hero.limiteGauche)){
 			compteurLevel = 2;
+			//position hero
+			Hero.heroPosX = 40;
+			//position pistolet
+			Pistol.pistoleroPosX = 16;
+			Pistol.pistoleroPosY = 7;
+			//position bloqueur
 			Enemy.enemyPosX = 24;
 			Enemy.enemyPosY = 15;
-			Hero.heroPosX = 40;
+			Enemy.enemy.setLocation(Enemy.enemyPosX*32, Enemy.enemyPosY*32);
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			
 		}
 		//Level 1-3
 		else if(compteurLevel == 2 && Hero.heroHitBox.intersects(Hero.limiteDroite)){

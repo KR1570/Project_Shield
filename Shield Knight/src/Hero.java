@@ -105,7 +105,7 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g) {
 		//couleur des formes red ou transparent
-		g.setColor(Color.red);
+		g.setColor(Color.transparent);
 		//Dessin de toutes les formes
 		getCarreImage(direction).draw(heroPosX * 32, heroPosY * 32 - 26,84,84);
 		g.draw(getHeroHitBox());
@@ -118,8 +118,8 @@ public class Hero {
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
 		//Position
-		//System.out.println("X : " + heroPosX);
-		//System.out.println("Y : " + heroPosY);
+		System.out.println("X : " + heroPosX);
+		System.out.println("Y : " + heroPosY);
 		//animation 
 		switch (direction) {
 		case UP:
@@ -202,7 +202,7 @@ public class Hero {
 		if (buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
 		}
-		//Limites du bas
+		//Mourir
 		if(getHeroHitBox().intersects(limiteEau) || isHit()) {
 			heroPosX = 5;
 			heroPosY = 15;
@@ -210,7 +210,7 @@ public class Hero {
 			System.out.println(InterfacesEnJeu.nombreVieRestante);
 			Maps.compteurLevel = 1;
 		}
-		//Ennemie swat
+		//Ennemie bloqueur
 		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false) {
 			heroPosX = Enemy.enemyPosX - 1.5f;
 		}

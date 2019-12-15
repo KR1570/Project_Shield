@@ -60,7 +60,7 @@ public class Jeu extends BasicGame{
 				//p = new Projectile();
 				//musique
 				musique = new Music("./Audio/musicDeFond.wav");
-				musique.play();
+				musique.loop();
 				musique.setVolume(0.15f);
 				//Menu
 				menu = new Menu();

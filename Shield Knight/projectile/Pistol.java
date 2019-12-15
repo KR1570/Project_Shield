@@ -70,6 +70,7 @@ public class Pistol {
 	}*/
 package projectile;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -83,28 +84,50 @@ import org.newdawn.slick.geom.Vector2f;
 import src.Bouclier;
 import src.Enemy;
 import src.Hero;
-
+//import src.Hero.Direction;
+//import src.Hero.Direction;
 enum Direction {
-	UP, DOWN, LEFT, RIGHT
+	RIGHT,LEFT
+}
+enum Action {
+	SHOOT, DIE, WAIT
 }
 
 public class Pistol {
-
 	private int time = 0;
 	private Hero hero;
 	private float pistolPosX;
 	private float pistolPosY;
 	private Rectangle radius;
-	private Rectangle pistolero;
-	private float pistoleroPosX;
-	private float pistoleroPosY;
+	public static Rectangle pistolero;
+	public static  float pistoleroPosX;
+	public static float pistoleroPosY;
 	public static Circle bullet;
 	public static Circle counter;
 	private boolean hitBouclier = false;
 	private Direction direction = Direction.LEFT;
+	private Action action = Action.WAIT;
+	private Animation anim_SHOOT;
+	private Animation anim_DIE;
+	private Animation anim_WAIT;
 	private boolean exist = false;
 	private boolean active = true;
 	private Bouclier bouclier;
+	private Image pistoleroImage;
+	private Animation getAnimation(int rowX, int rowY, int frames) {
+		Animation anim = new Animation(false);
+		for (int x = 0; x < rowX; x++) {
+			anim.addFrame(pistoleroImage.getSubImage(x * 32, rowY * 32, 32, 32),frames);
+		}
+		return anim;
+	}
+	/*private Animation getAnimation(int rowX, int rowY, int frames) {
+		Animation anim = new Animation(false);
+		for (int x = 0; x < rowX; x++) {
+			anim.addFrame(pistoleroImage.getSubImage(x * 32, rowY * 32, 32, 32),frames);
+		}
+		return anim;
+	}*/
 	public Circle getBullet() {
 		return bullet;
 	}
@@ -122,17 +145,21 @@ public class Pistol {
 	}
 //-------------------------------------------------------INIT------------------------------------------------------------------
 
-	public void init() {
+	public void init() throws SlickException {
 		bouclier = new Bouclier();	
 		hero = new Hero();
-		pistolPosX = 1200;
-		pistolPosY = 520;
-		pistoleroPosX = 1200;
-		pistoleroPosY = 500;
-		pistolero = new Rectangle(pistoleroPosX, pistoleroPosY, 25, 50);
-		bullet = new Circle(pistolPosX,pistolPosY,10,10);
-
+		pistolPosX = 26;
+		pistolPosY = 16;
+		pistoleroPosX = pistolPosX*32;
+		pistoleroPosY = pistolPosY*32;
+		pistolero = new Rectangle(pistoleroPosX*32, pistoleroPosY*32, 25, 50);
+		bullet = new Circle(pistolPosX*32,pistolPosY*32,10,10);
+		pistoleroImage = new Image("./Sprites/Space Cadet Sprite Sheet.png")/*.getFlippedCopy(true, false)*/;
+		anim_SHOOT = getAnimation(5, 2,100);
+		anim_DIE = getAnimation(8, 4,75);
+		anim_WAIT = getAnimation(4, 0, 200);
 	}
+	
 //-------------------------------------------------------RENDER------------------------------------------------------------------
 
 	public void render(GameContainer gc, Graphics g) {
@@ -142,15 +169,26 @@ public class Pistol {
 		//g.draw(getRadius(direction));
 		if(exist) {
 		g.fill(bullet);
+		getPistoleroImage(action).draw(pistoleroPosX*32-32, pistoleroPosY*32-34,84,84);
 		}
-
 	}
+	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 
 	public void update(GameContainer gc, int delta) {
+		switch (action) {
+		case SHOOT:
+			anim_SHOOT.update(delta);
+			break;
+		case DIE :
+			anim_DIE.update(delta);
+			break;
+		case WAIT :
+			anim_WAIT.update(delta);
+			break;
+
+		}
 		Input input = gc.getInput();
-
-
 			if(active) {
 				exist = true;
 				time+=delta;
@@ -159,6 +197,7 @@ public class Pistol {
 
 			
 			switch (direction) {
+			//Droite
 			case RIGHT:
 				if(bouclier.isHitPistol()==true) {
 					time=0;
@@ -170,23 +209,26 @@ public class Pistol {
 					 if(hitBouclier == true){
 						pistolPosX-=5;
 						getBullet().setLocation(pistolPosX,pistolPosY);
+						action = Action.SHOOT;
 						
 					}
 					else if(time >2000 &&  hitBouclier == true) {
 							hitBouclier = false;
-							pistolPosX =1200;
+							pistolPosX =pistoleroPosX;
 							time = 0;
 						}
 				
 				else if(time >2000 &&  hitBouclier == false) {
-					pistolPosX =1200;
+					pistolPosX = pistoleroPosX;
 					time = 0;
+					action = Action.SHOOT;
 				}
 				if(hitBouclier == false) {
 				pistolPosX+=5;
 				getBullet().setLocation(pistolPosX,pistolPosY);
 				}
 				break;
+			//Gauche
 			case LEFT:
 				if(bouclier.isHitPistol()==true) {
 					time=0;
@@ -194,6 +236,7 @@ public class Pistol {
 				}
 				else if((bullet.intersects(pistolero)&&  hitBouclier == true)){
 					hitBouclier = false;
+					action = Action.DIE;
 				}
 					 if(hitBouclier == true){
 						pistolPosX+=5;
@@ -202,24 +245,38 @@ public class Pistol {
 					}
 					else if(time >2000 &&  hitBouclier == true) {
 							hitBouclier = false;
-							pistolPosX =1200;
+							pistolPosX = pistoleroPosX;
 							time = 0;
 						}
 				
 				else if(time >2000 &&  hitBouclier == false) {
-					pistolPosX =1200;
+					pistolPosX = pistoleroPosX;
 					time = 0;
+					action = Action.SHOOT;
 				}
 				if(hitBouclier == false) {
 				pistolPosX-=5;
 				getBullet().setLocation(pistolPosX,pistolPosY);
 				}
-				
-				
 				break;
 			}
 		
 
+	}
+	public Animation getPistoleroImage(Action action) {
+		Animation anim = new Animation(false);
+		switch (action) {
+			case SHOOT : 
+				anim = anim_SHOOT;
+				break;
+			case DIE:
+				anim = anim_DIE;
+				break;
+			case WAIT : 
+				anim = anim_WAIT;
+				break;
+		}
+		return anim;
 	}
 
 
