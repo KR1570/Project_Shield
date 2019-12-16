@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -19,6 +20,7 @@ public class Enemy {
 	enum Direction{
 		UP, DOWN, LEFT, RIGHT
 	}
+	public static Sound shot;
 	private int enemyHP;
 	static float enemyPosX;
 	static float enemyPosY;
@@ -32,6 +34,7 @@ public class Enemy {
 	private Direction direction;
 	private Animation anim_RIGHT;
 	private Animation anim_LEFT;
+	public static boolean vie = true;
 	//Animation droite
 	private Animation getAnimationR(int rowX, int rowY, int frames) {
 		Animation anim = new Animation(false);
@@ -77,15 +80,19 @@ public class Enemy {
 		reverse = true;
 		swatR = new Image("./Sprites/Gladiator-Sprite Sheet.png");
 		swatL = new Image("./Sprites/Gladiator-Sprite Sheet-Left.png");
+		shot = new Sound("./Audio/shot.wav");
 		anim_LEFT = getAnimationR(8, 1, 100);
 		anim_RIGHT = getAnimationL(8, 1,100);
 	}
 	
 //-------------------------------------------------------RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g)  {
-		g.setColor(Color.transparent);
-		g.draw(enemy);
-		getSwat(direction).draw(enemyPosX*32-24,((enemyPosY)*32-24),96, 96);
+		if (vie == true)
+		{
+			g.setColor(Color.transparent);
+			g.draw(enemy);
+			getSwat(direction).draw(enemyPosX*32-24,((enemyPosY)*32-24),96, 96);
+		}
 	}
 	
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
@@ -108,6 +115,15 @@ public class Enemy {
 		}
 		if(Maps.compteurLevel == 3) {
 			buffer = Maps.mapLevel3;
+		}
+		if(Maps.compteurLevel == 21) {
+			buffer = Maps.mapLevel21;
+		}
+		if(Maps.compteurLevel == 22) {
+			buffer = Maps.mapLevel22;
+		}
+		if(Maps.compteurLevel == 23) {
+			buffer = Maps.mapLevel23;
 		}
 		//buffer des maps
 		int sol = buffer.getLayerIndex("Sol");

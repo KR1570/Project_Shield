@@ -100,7 +100,6 @@ public class Jeu extends BasicGame{
 			sniper.render(gc, g);
 		}
 	}
-
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {

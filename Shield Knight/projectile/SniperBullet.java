@@ -84,9 +84,9 @@ public class SniperBullet {
 
 	public void render(GameContainer gc, Graphics g) {
 		if (active) {
-			g.setColor(Color.black);
+			g.setColor(Color.magenta);
 			g.fillOval(position.getX() - 10, position.getY() - 10, 20, 20);
-			g.setColor(Color.red);
+			g.setColor(Color.transparent);
 			g.draw(bullet);
 		}
 	}

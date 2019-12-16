@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 import org.newdawn.slick.tiled.TiledMap;
-
+import interfacejeu.*;
 import src.Enemy.Direction;
 import interfacejeu.InterfacesEnJeu;
 public class Hero {
@@ -23,16 +23,19 @@ public class Hero {
 	private Animation anim_LEFT;
 	private Animation anim_NOTHINGLEFT;
 	private Animation anim_NOTHING;
-	private boolean hit = false;
+	private boolean hitSniper = false;
+	private boolean hitPistol = false;
 	private boolean droite;
 	private boolean gauche;
+	public static boolean mapBool = false;
 	//Variable du hero
+	private boolean invincibilite = true;
 	private int heroHP;
 	static float heroPosX = 2;
 	static float heroPosY = 18;
 	private Image heroImage;
-	float heroX;
-	float heroY;
+	public static float heroX;
+	public static float heroY;
 	private Animation getAnimation(int rowX, int rowY, int frames) {
 		Animation anim = new Animation(false);
 		for (int x = 0; x < rowX; x++) {
@@ -46,16 +49,16 @@ public class Hero {
 	private float sautCompteur = 0;
 	private Vector2f velocite;
 	private Point position;
+	private Sound sauter;
 	//Variable grosseur tuile
 	private float scale = 32;
 	//Hitbox
 	public static Rectangle heroHitBox;
-
 	//Ligne 
 	static Line limiteEau;
 	static Line limiteGauche;
 	static Line limiteDroite;
-	private Line limiteHaut;
+	static Line limiteHaut;
 	//Ennemy
 	private Enemy enemy1;
 	private SniperBullet sniper;
@@ -81,8 +84,8 @@ public class Hero {
 			//heroImage = new Image("./images/knight.png");
 			setHeroHitBox(new Rectangle(heroPosX*32,heroPosY*32,48,48));
 			//Limites de la map
-			limiteHaut = new Line(0,24,1440,24);
-			limiteGauche = new Line(20,0,20,768);
+			limiteHaut = new Line(0,60,1440,60);
+			limiteGauche = new Line(36,0,36,768);
 			limiteDroite = new Line(1420,0,1420,768);
 			limiteEau = new Line(0,748,1440,748);
 			//Enemie
@@ -97,6 +100,7 @@ public class Hero {
 			anim_NOTHING = getAnimation(12, 8,100);
 			anim_RIGHT = getAnimation(8, 1,50);
 			anim_NOTHING = getAnimation(12, 0,100);
+			sauter = new Sound("./Audio/Jump.wav");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -145,10 +149,19 @@ public class Hero {
 		if(Maps.compteurLevel == 3) {
 			buffer = Maps.mapLevel3;
 		}
+		if(Maps.compteurLevel == 21) {
+			buffer = Maps.mapLevel21;
+		}
+		if(Maps.compteurLevel == 22) {
+			buffer = Maps.mapLevel22;
+		}
+		if(Maps.compteurLevel == 23) {
+			buffer = Maps.mapLevel23;
+		}
 		int sol = buffer.getLayerIndex("Sol");
 		enemy1.update(gc, delta);
 		//HitBox mouvement
-		getHeroHitBox().setLocation(heroPosX*32,heroPosY*32);
+		getHeroHitBox().setLocation(heroPosX*32+10,heroPosY*32);
 		//Gravité
 		if(buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (heroHitBox.intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp)) {
 		}
@@ -160,6 +173,11 @@ public class Hero {
 		//SPACE pour sauter
 		if (input.isKeyDown(Input.KEY_SPACE) || input.isKeyDown(Input.KEY_W)) {
 			direction = Direction.UP;
+			if (jumping == true){
+				sauter.play();
+				jumping = false;
+			}
+			
 			if(buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) - 1, sol) == 0 && !getHeroHitBox().intersects(limiteHaut)) {
 				if (sautCompteur <= 8.0f) {
 					heroPosY -= 0.3f;
@@ -196,25 +214,42 @@ public class Hero {
 		if (input.isKeyPressed(Input.KEY_ESCAPE) ) {
 			Maps.compteurLevel = 0;
 		}
-		
-		
 		//Reset le saut
 		if (buffer.getTileId(Math.round(heroPosX) , Math.round(heroPosY) + 1, sol) != 0 || (getHeroHitBox().intersects(Bouclier.bouclierHitBox) && Bouclier.bouclierUp == true)) {
 			sautCompteur =0;
+			jumping = true;
 		}
 		//Mourir
-		if(getHeroHitBox().intersects(limiteEau) || isHit()) {
+		
+		if(getHeroHitBox().intersects(limiteEau)&&invincibilite==false){
 			heroPosX = 5;
 			heroPosY = 15;
 			InterfacesEnJeu.nombreVieRestante--;
 			System.out.println(InterfacesEnJeu.nombreVieRestante);
 			Maps.compteurLevel = 1;
+			Menu.gameOverBool = true;
+		}
+		if(isHitPistol() && Pistol.vie == true && invincibilite==false) {
+			heroPosX = 5;
+			heroPosY = 15;
+			InterfacesEnJeu.nombreVieRestante--;
+			System.out.println(InterfacesEnJeu.nombreVieRestante);
+			Maps.compteurLevel = 1;
+			Menu.gameOverBool = true;
+		}
+		if(isHitSniper() && Sniper.vie == true && invincibilite==false) {
+			heroPosX = 5;
+			heroPosY = 15;
+			InterfacesEnJeu.nombreVieRestante--;
+			System.out.println(InterfacesEnJeu.nombreVieRestante);
+			Maps.compteurLevel = 1;
+			Menu.gameOverBool = true;
 		}
 		//Ennemie bloqueur
-		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false) {
+		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false && Enemy.vie == true && invincibilite==false) {
 			heroPosX = Enemy.enemyPosX - 1.5f;
 		}
-		else if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse) {
+		else if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse && Enemy.vie == true) {
 			heroPosX = Enemy.enemyPosX + 1.5f;
 		}
 }
@@ -240,12 +275,19 @@ public class Hero {
 		}
 		return anim;
 	}
-	public boolean isHit() {
-		hit = false;
-		if(getHeroHitBox().intersects(sniper.getBullet())|| getHeroHitBox().intersects(pistol.bullet)) {
-			hit = true;
+	public boolean isHitPistol() {
+		hitPistol = false;
+		if(getHeroHitBox().intersects(pistol.bullet)) {
+			hitPistol = true;
 		}
-		return hit;
+		return hitPistol;
+	}
+	public boolean isHitSniper() {
+		hitSniper = false;
+		if(getHeroHitBox().intersects(sniper.getBullet())) {
+			hitSniper = true;
+		}
+		return hitSniper;
 	}
 	public static float getHeroPosX() {
 		return heroPosX;

@@ -6,15 +6,21 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
+
+import interfacejeu.*;
+
 import interfacejeu.InterfacesEnJeu;
 import projectile.Pistol;
-
+import projectile.Sniper;
 public class Maps {
 	private TiledMap mapMenu;
 	private TiledMap mapGameOver;
 	public static TiledMap mapLevel1;
 	public static TiledMap mapLevel2;
 	public static TiledMap mapLevel3;
+	public static TiledMap mapLevel21;
+	public static TiledMap mapLevel22;
+	public static TiledMap mapLevel23;
 	
 	public static int compteurLevel = 0;
 	
@@ -28,6 +34,9 @@ public class Maps {
 			mapLevel1 = new TiledMap("./Maps/level1-1.tmx");
 			mapLevel2 = new TiledMap("./Maps/level1-2.tmx");
 			mapLevel3 = new TiledMap("./Maps/level1-3.tmx");
+			mapLevel21 = new TiledMap("./Maps/level2-1.tmx");
+			mapLevel22 = new TiledMap("./Maps/level2-2.tmx");
+			mapLevel23 = new TiledMap("./Maps/level2-3.tmx");
 			mapMenu = new TiledMap("./Maps/menu.tmx");
 			mapGameOver = new TiledMap("./Maps/gameOver.tmx");
 		} catch (SlickException e) {
@@ -54,6 +63,17 @@ public class Maps {
 			case 1000 :
 				mapGameOver.render(0, 0);
 				break;
+				
+			case 21 :
+				mapLevel21.render(0, 0);
+				break;
+			case 22 :
+				mapLevel22.render(0, 0);
+				break;
+			case 23 :
+				mapLevel23.render(0, 0);
+				break;
+				
 		}
 		
 	}
@@ -63,44 +83,124 @@ public class Maps {
 		//Level 1-1
 		if(compteurLevel == 2 && Hero.heroHitBox.intersects(Hero.limiteGauche)){
 			compteurLevel = 1;
+			//Hero
+			Hero.heroPosX = 40;
+			//Enemie bloqueur
 			Enemy.enemyPosX = 12;
 			Enemy.enemyPosY = 11;
+			//Pistolero
 			Pistol.pistoleroPosX = 26;
 			Pistol.pistoleroPosY = 16;
-			Hero.heroPosX = 40;
 			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			Pistol.directionPistolero = 2;
+			//Witch
+			Sniper.posWitchX = 37;
+			Sniper.posWitchY = 7;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
+			Sniper.vie=true;
+		}
+		else if (Menu.gameOverBool == true)
+		{
+			compteurLevel = 1;
+			//Enemie bloqueur
+			Enemy.enemyPosX = 12;
+			Enemy.enemyPosY = 11;
+			//Hero
+			Hero.heroPosX = 2;
+			//Pistolero
+			Pistol.pistoleroPosX = 26;
+			Pistol.pistoleroPosY = 16;
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			Pistol.directionPistolero = 2;
+			Pistol.vie = true;
+			//Witch
+			Sniper.vie=true;
+			Sniper.posWitchX = 37;
+			Sniper.posWitchY = 7;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
+			//Mourir
+			Menu.gameOverBool = false;
 		}
 		//Level 1-2
 		else if(compteurLevel == 1 && Hero.heroHitBox.intersects(Hero.limiteDroite)){
 			compteurLevel = 2;
+			//Hero
 			Hero.heroPosX = 2;
-			Pistol.pistoleroPosX = 16;
-			Pistol.pistoleroPosY = 7;
+			//Enemie bloqueur
 			Enemy.enemyPosX = 24;
 			Enemy.enemyPosY = 15;
-			Enemy.enemy.setLocation(Enemy.enemyPosX*32, Enemy.enemyPosY*32);
+			//Pistolero
+			Pistol.pistoleroPosX = 16;
+			Pistol.pistoleroPosY = 7;
 			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			Pistol.vie = true;
+			Pistol.directionPistolero = 1;
+			//Witch
+			Sniper.vie=true;
+			Sniper.posWitchX = 37;
+			Sniper.posWitchY = 19;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
 		else if (compteurLevel == 3 && Hero.heroHitBox.intersects(Hero.limiteGauche)){
 			compteurLevel = 2;
-			//position hero
+			//Hero
 			Hero.heroPosX = 40;
-			//position pistolet
-			Pistol.pistoleroPosX = 16;
-			Pistol.pistoleroPosY = 7;
-			//position bloqueur
+			//Bloqueur
 			Enemy.enemyPosX = 24;
 			Enemy.enemyPosY = 15;
-			Enemy.enemy.setLocation(Enemy.enemyPosX*32, Enemy.enemyPosY*32);
+			//Pistolet
+			Pistol.pistoleroPosX = 16;
+			Pistol.pistoleroPosY = 7;
 			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
-			
+			//direction pistolero droite
+			Pistol.directionPistolero = 1;
+			Pistol.vie = true;
+			//Witch
+			Sniper.vie=true;
+			Sniper.posWitchX = 37;
+			Sniper.posWitchY = 19;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
 		//Level 1-3
 		else if(compteurLevel == 2 && Hero.heroHitBox.intersects(Hero.limiteDroite)){
 			compteurLevel = 3;
+			//Hero
+			Hero.heroPosX = 2;
+			//Bloqueur
 			Enemy.enemyPosX = 12;
 			Enemy.enemyPosY = 4;
+			//Pistolet
+			Pistol.pistoleroPosX = 2;
+			Pistol.pistoleroPosY = 15;
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			Pistol.vie = true;
+			Pistol.directionPistolero = 1;
+			//Witch
+			Sniper.vie=true;
+			Sniper.posWitchX = 42;
+			Sniper.posWitchY = 9;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
+		}
+		//Level 2-1
+		else if(compteurLevel == 3 && Hero.heroHitBox.intersects(Hero.limiteHaut)){
+			compteurLevel = 21;
+			//Hero
 			Hero.heroPosX = 2;
+			//Bloqueur
+			Enemy.enemyPosX = 2;
+			Enemy.enemyPosY= 19;
+			Enemy.vie=false;
+			//pistol
+			Pistol.pistoleroPosX = 37;
+			Pistol.pistoleroPosY = 15;
+			Pistol.pistolero.setLocation(Pistol.pistoleroPosX*32, Pistol.pistoleroPosY*32);
+			Pistol.vie = true;
+			Pistol.directionPistolero = 2;
+			//witch
+			Sniper.vie = true;
+			Sniper.posWitchX = 35;
+			Sniper.posWitchY =3;
+			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
 		//Game Over
 		else if (compteurLevel == 1000) {
@@ -110,6 +210,9 @@ public class Maps {
 				compteurLevel = 0;
 				InterfacesEnJeu.nombreVieRestante = 3;
 			}
+		}
+		else if (compteurLevel == 0){
+			
 		}
 	}
 }

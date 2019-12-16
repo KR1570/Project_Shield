@@ -32,7 +32,6 @@ public class Bouclier {
 	static boolean bouclierUp;
 	public static Rectangle bouclierHitBox;
 	static Image bouclierImage;
-	
 	private Direction direction;
 
 //-------------------------------------------------------INIT------------------------------------------------------------------
@@ -42,10 +41,14 @@ public class Bouclier {
 	}
 //-------------------------------------------------------RENDER------------------------------------------------------------------
 	public void render(GameContainer gc, Graphics g)  {
-		g.setColor(Color.black);
+		g.setColor(Color.transparent);
 		g.draw(getBouclierHitBox(getDirection()));
-		//g.draw(getBouclierImage(direction));
-		//getBouclierImage(direction).draw(Hero.heroPosX*32+56,Hero.heroPosY*32,24,48);
+		try {
+			
+			getBouclierImage(direction).draw(getBouclierHitBox(direction).getCenterX()-32, getBouclierHitBox(direction).getCenterY()-32,0.7f);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 //-------------------------------------------------------UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta){
@@ -98,13 +101,13 @@ public class Bouclier {
 	public Image getBouclierImage(Direction direction) throws SlickException{
 		switch (direction) {
 			case RIGHT:
-				bouclierImage = new Image("./images/bouclierRight.png");
+				bouclierImage = new Image("./images/bouclierR.png");
 				break;
 			case LEFT:
-				bouclierImage = new Image("./images/bouclierLeft.png");
+				bouclierImage = new Image("./images/bouclierL.png");
 				break;
 			case UP:
-				bouclierImage = new Image("./images/bouclierUp.png");
+				bouclierImage = new Image("./images/bouclierU.png");
 				break;
 			case DOWN:
 				break;
