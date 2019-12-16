@@ -1,0 +1,16 @@
+Bonjour Bienvenu dans notre projet de fin de session
+-----------------------------------------------------------------------------
+Si par malheur le jeu ne se lance pas c'est probablement parce que les tiles ne se sont pas bien charger 
+si c'est le cas aller voir le dossier debug pour des screenshots afin de les faire fonctionner.
+-----------------------------------------------------------------------------
+Sinon voici une liste de qui à travailler sur quoi :
+
+Vincent :
+Package Projectile.
+Enemy.
+hero.
+
+Christophe :
+Animation.
+Gestion des maps.
+package interface.
