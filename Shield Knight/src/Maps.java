@@ -22,6 +22,7 @@ public class Maps {
 	public static TiledMap mapLevel22;
 	public static TiledMap mapLevel23;
 	public static int compteurLevel = 0;
+	public static TiledMap mapWin;
 	
 
 	public Maps(){
@@ -38,6 +39,7 @@ public class Maps {
 			mapLevel23 = new TiledMap("./Maps/level2-3.tmx");
 			mapMenu = new TiledMap("./Maps/menu.tmx");
 			mapGameOver = new TiledMap("./Maps/gameOver.tmx");
+			mapWin = new TiledMap("./Maps/win.tmx");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -49,6 +51,7 @@ public class Maps {
 		switch(compteurLevel) {
 			case 0 :
 				mapMenu.render(0, 0);
+				Hero.invincibilite=false;
 				break;
 			case 1 :
 				mapLevel1.render(0,0);
@@ -72,6 +75,9 @@ public class Maps {
 			case 23 :
 				mapLevel23.render(0, 0);
 				break;
+			case 1001 :
+				mapWin.render(0, 0);
+				break;
 				
 		}
 		
@@ -80,6 +86,7 @@ public class Maps {
 	//------------------------------------------------------------------MÉTHODE UPDATE------------------------------------------------------------------
 	public void update(GameContainer gc, int delta) {
 		//Level 1-1
+		/*
 		if(compteurLevel == 2 && Hero.heroHitBox.intersects(Hero.limiteGauche)){
 			compteurLevel = 1;
 			//Hero
@@ -98,7 +105,8 @@ public class Maps {
 			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 			Sniper.vie=true;
 		}
-		else if (Menu.gameOverBool == true)
+		*/
+		if (Menu.gameOverBool == true)
 		{
 			if (Menu.chapitreLevel == 1) {
 				compteurLevel = 1;
@@ -163,6 +171,7 @@ public class Maps {
 			Sniper.posWitchY = 19;
 			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
+		/*
 		else if (compteurLevel == 3 && Hero.heroHitBox.intersects(Hero.limiteGauche)){
 			compteurLevel = 2;
 			//Hero
@@ -183,6 +192,7 @@ public class Maps {
 			Sniper.posWitchY = 19;
 			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
+		*/
 		//Level 1-3
 		else if(compteurLevel == 2 && Hero.heroHitBox.intersects(Hero.limiteDroite)){
 			compteurLevel = 3;
@@ -267,10 +277,21 @@ public class Maps {
 			Sniper.posWitchY =3;
 			Sniper.sniper.setLocation(Sniper.posWitchX*32, Sniper.posWitchX*32);
 		}
+		//Winning screen
+		else if (compteurLevel == 23 && Hero.heroHitBox.intersects(Hero.limiteDroite)) {
+			compteurLevel = 1001;
+			Input input = gc.getInput();
+			//Recommencer
+			if (input.isKeyPressed(Input.KEY_ENTER)) {
+				compteurLevel = 0;
+				InterfacesEnJeu.nombreVieRestante = 3;
+			}
+		}
 		
 		//Game Over
 		else if (compteurLevel == 1000) {
 			Input input = gc.getInput();
+			Hero.invincibilite = true;
 			//Recommencer
 			if (input.isKeyPressed(Input.KEY_ENTER)) {
 				compteurLevel = 0;

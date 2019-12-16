@@ -29,7 +29,7 @@ public class Hero {
 	private boolean gauche;
 	public static boolean mapBool = false;
 	//Variable du hero
-	private boolean invincibilite = true;
+	public static boolean invincibilite = false;
 	private int heroHP;
 	static float heroPosX = 2;
 	static float heroPosY = 18;
@@ -220,7 +220,7 @@ public class Hero {
 			jumping = true;
 		}
 		//Mourir
-		if(getHeroHitBox().intersects(limiteEau)){
+		if(getHeroHitBox().intersects(limiteEau) && invincibilite==false){
 			heroPosX = 5;
 			heroPosY = 15;
 			InterfacesEnJeu.nombreVieRestante--;
