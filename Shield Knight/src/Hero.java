@@ -220,13 +220,18 @@ public class Hero {
 			jumping = true;
 		}
 		//Mourir
-		
-		if(getHeroHitBox().intersects(limiteEau)&&invincibilite==false){
+		if(getHeroHitBox().intersects(limiteEau)){
 			heroPosX = 5;
 			heroPosY = 15;
 			InterfacesEnJeu.nombreVieRestante--;
 			System.out.println(InterfacesEnJeu.nombreVieRestante);
-			Maps.compteurLevel = 1;
+			if (Menu.chapitreLevel == 1) {
+				Maps.compteurLevel = 1;
+			}
+			else if (Menu.chapitreLevel == 2) {
+				Maps.compteurLevel = 21;
+			}
+				
 			Menu.gameOverBool = true;
 		}
 		if(isHitPistol() && Pistol.vie == true && invincibilite==false) {
@@ -249,7 +254,7 @@ public class Hero {
 		if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse == false && Enemy.vie == true && invincibilite==false) {
 			heroPosX = Enemy.enemyPosX - 1.5f;
 		}
-		else if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse && Enemy.vie == true) {
+		else if(getHeroHitBox().intersects(enemy1.enemy) && Enemy.reverse && Enemy.vie == true && invincibilite==false) {
 			heroPosX = Enemy.enemyPosX + 1.5f;
 		}
 }
