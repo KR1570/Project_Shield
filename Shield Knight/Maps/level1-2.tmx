@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="45" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
  <tileset firstgid="1" name="BG" tilewidth="32" tileheight="32" tilecount="713" columns="31">
-  <image source="../../../../Pictures/BG/BG.png" width="1000" height="750"/>
+  <image source="BG.png" width="1000" height="750"/>
  </tileset>
- <tileset firstgid="714" name="1" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="../../../../Pictures/Tiles/1.png" width="128" height="128"/>
- </tileset>
- <tileset firstgid="730" name="2" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="../../../../Pictures/Tiles/2.png" width="128" height="128"/>
- </tileset>
- <tileset firstgid="746" name="3" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="../../../../Pictures/Tiles/3.png" width="128" height="128"/>
- </tileset>
- <tileset firstgid="762" name="13" tilewidth="32" tileheight="32" tilecount="8" columns="4">
-  <image source="../../../../Pictures/Tiles/13.png" width="128" height="93"/>
- </tileset>
- <tileset firstgid="770" name="14" tilewidth="32" tileheight="32" tilecount="8" columns="4">
-  <image source="../../../../Pictures/Tiles/14.png" width="128" height="93"/>
- </tileset>
- <tileset firstgid="778" name="15" tilewidth="32" tileheight="32" tilecount="8" columns="4">
-  <image source="../../../../Pictures/Tiles/15.png" width="128" height="93"/>
- </tileset>
- <tileset firstgid="786" name="17" tilewidth="32" tileheight="32" tilecount="12" columns="4">
-  <image source="../../../../Pictures/Tiles/17.png" width="128" height="99"/>
- </tileset>
- <tileset firstgid="798" name="goodly-2x" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+ <tileset firstgid="714" name="goodly-2x" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="goodly-2x.png" width="512" height="512"/>
  </tileset>
  <layer id="1" name="Fond" width="45" height="24">
@@ -34,12 +13,12 @@
  </layer>
  <layer id="3" name="Objet" width="45" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAECu2WQQrAIAwEA/2HiNT/f1EXWQxF6MnbBNSNCVGGgEZgEIAABCDwR6A8EX2OOoc0BgEIQAACELhBwG+NavPe3CBMzRMB95r+OTL5LWntqzcdW2rPyn9Tzo6sv5Prfvezb+2zVFPad/PqPFYInAgMFq1+wOAQAAA=
+   H4sIAAAAAAAECu2WQQrAIAwEQ///MhGpP9JFFkMRevI2AXVjQpQhoBEYBCAAAQj8EShPRJ+jziGNQQACEIAABG4Q8Fuj2rw3NwhT80TAvaZ/jkx+S1r76k3Hltqz8t+UsyPr7+S63/3sW/ss1ZT23bw6jxUCJwIDtinKL+AQAAA=
   </data>
  </layer>
  <layer id="2" name="Sol" width="45" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAECmNgGAWjITAaAqMhMBoCwzEE9JgZGPSRsAGQPdiBH9CN/kg4YAi4ebCH6aj7RkNgNARGQ4CWITBa19AydEfNxhUCyO0bYtno7SBY2qWWOCF32APbNKRiB7R2kB3UDGqJE3IPcpuMWDZ62w3WtqOWOCF3AACNlntH4BAAAA==
+   H4sIAAAAAAAECmNgGAWjITAaAqMhMBoCwzEEbjExMNxGwneA7MEOfgHd+BsJ/xkCbh7sYTrqvtEQGA2B0RCgZQiM1jW0DN1Rs3GFAHL7hlg2ejsIlnapJU7IHa+BbRpS8Ru0dtArqBnUEifkHuQ2GbFs9LYbrG1HLXFC7gAAoKr+iOAQAAA=
   </data>
  </layer>
 </map>
