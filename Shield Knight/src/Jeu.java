@@ -112,7 +112,7 @@ public class Jeu extends BasicGame{
 		//Game Over
 		else if(Maps.compteurLevel == 1000) {
 			interfaces.update(gc, delta);
-			maps.update(gc, delta);
+			//maps.update(gc, delta);
 		}
 		else {
 			maps.update(gc, delta);

@@ -267,7 +267,5 @@ public class Pistol {
 	public Direction getDirection() {
 		return direction;
 	}
-
-
 }
 
